@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marmee Pandya Portfolio</title>
+    <meta
+      name="description"
+      content="Marmee Pandya Portfolio: MSc Data Science, University of Mannheim. LLM agents, RAG, and applied NLP case studies."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="boot" aria-hidden="true">
+      <div class="boot-inner">
+        <div class="boot-line" data-text="$ ssh marmee.dev"></div>
+        <div class="boot-line" data-text="> authenticating... ok"></div>
+        <div
+          class="boot-line"
+          data-text="> loading 7 case studies, 2 in flight"
+        ></div>
+        <div class="boot-line" data-text="> rendering embedding space_"></div>
+      </div>
+      <div class="boot-skip">skip →</div>
+    </div>
+
+    <div class="bg-grid"></div>
+    <div class="grain"></div>
+    <div class="cursor-glow"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <nav>
+      <div class="nav-inner">
+        <a class="logo" href="#top">marmee_pandya<span>()</span></a>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#work">Work</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero wrap" id="top">
+      <div class="eyebrow">MSc Data Science · University of Mannheim</div>
+      <h1>
+        <span class="line"><span data-scramble>I build things that</span></span>
+        <span class="line"
+          ><span class="grad" data-scramble>read, reason,</span></span
+        >
+        <span class="line"><span data-scramble>and retrieve.</span></span>
+      </h1>
+      <p class="sub">
+        Marmee Pandya - I turn messy text, feedback, and unlabeled data into
+        systems that make a defensible call: LLM agents, RAG pipelines, and NLP
+        models validated against real numbers, not vibes.
+      </p>
+      <div class="cta-row">
+        <a href="#work" class="btn primary magnetic">View case studies →</a>
+        <a href="mailto:marmeep23@gmail.com" class="btn ghost magnetic"
+          >Get in touch</a
+        >
+      </div>
+      <div class="scroll-cue">
+        <div class="line-anim"></div>
+        scroll
+      </div>
+    </header>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="about-grid">
+          <div class="about-text reveal">
+            <div class="section-tag">About</div>
+            <p>
+              I'm finishing my
+              <strong>MSc in Data Science at the University of Mannheim</strong
+              >. Across three years of coursework and an industry thesis, one
+              question keeps coming back: how do you get a model to make a
+              genuinely reliable call on messy, real-world, mostly-unlabeled
+              data - and then prove it, not just claim it?
+            </p>
+            <p>
+              That question has taken different shapes -
+              <strong
+                >active learning on 200 labeled grief-journal entries</strong
+              >, a <strong>multi-agent LLM shopping copilot</strong> that has to
+              justify its picks, a
+              <strong>RAG pipeline that imputes missing product specs</strong>
+              instead of hallucinating them, and a
+              <strong
+                >semantic search benchmark over 20 million companies</strong
+              >
+              for an industry thesis partner.
+            </p>
+            <p>
+              I care less about which model is trendiest and more about whether
+              the result holds up under a baseline nobody asked me to run -
+              which is why most of these case studies include one, plus the
+              negative results I didn't have to report.
+            </p>
+          </div>
+          <div class="stat-grid reveal">
+            <div class="stat">
+              <div class="num" data-count="98.7" data-suffix="%">0.0%</div>
+              <div class="label">
+                LLM–human agreement, media-bias annotation
+              </div>
+            </div>
+            <div class="stat">
+              <div class="num" data-count="5.7" data-suffix="x">0x</div>
+              <div class="label">
+                Faster than OpenAI embeddings, same quality
+              </div>
+            </div>
+            <div class="stat">
+              <div class="num" data-count="77.1" data-suffix="%">0.0%</div>
+              <div class="label">
+                RAG imputation accuracy, up from 15.6% LLM-only
+              </div>
+            </div>
+            <div class="stat">
+              <div class="num" data-count="0.97" data-suffix="">0.00</div>
+              <div class="label">ROC-AUC, maladaptive-coping detector</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-tag">Selected work</div>
+          <h2>Seven projects, one map</h2>
+          <p>
+            Hover a node for the headline, click to open the full case study.
+            Six are shipped with verified numbers pulled straight from the
+            signed reports; one - the thesis - is still in flight.
+          </p>
+        </div>
+
+        <div class="constellation-wrap">
+          <div class="constellation" id="constellation"></div>
+
+          <div class="constellation-fallback">
+            <a class="cf-row" href="projects/shopping-assistant.html">
+              <div class="cf-left">
+                <span class="cf-idx">01</span>
+                <div>
+                  <h4>Shopping Assistant</h4>
+                  <div class="hook">
+                    Online shoppers face inconsistent specs and noisy reviews.
+                    I built a multi-agent LangGraph pipeline to search,
+                    extract, and rank products automatically, improving
+                    precision by 79% over keyword search.
+                  </div>
+                </div>
+              </div>
+              <span class="go">View →</span>
+            </a>
+            <a class="cf-row" href="projects/rag-cleaning.html">
+              <div class="cf-left">
+                <span class="cf-idx">02</span>
+                <div>
+                  <h4>RAG Data Cleaning</h4>
+                  <div class="hook">
+                    Missing product specs often carry zero signal in their own
+                    description. My RAG pipeline retrieves them from other
+                    listings instead of guessing, lifting accuracy from 15.6%
+                    to 77.1%.
+                  </div>
+                </div>
+              </div>
+              <span class="go">View →</span>
+            </a>
+            <a class="cf-row" href="projects/emotion-regulation.html">
+              <div class="cf-left">
+                <span class="cf-idx">03</span>
+                <div>
+                  <h4>Emotion Regulation ML</h4>
+                  <div class="hook">
+                    A mental-health app had 28,000+ unlabeled entries and only
+                    100-200 labeled ones. Active learning on EmoBERTa turned
+                    that into a model with 0.97 ROC-AUC.
+                  </div>
+                </div>
+              </div>
+              <span class="go">View →</span>
+            </a>
+            <a class="cf-row" href="projects/wiki-trends.html">
+              <div class="cf-left">
+                <span class="cf-idx">04</span>
+                <div>
+                  <h4>Wiki Edit Wars</h4>
+                  <div class="hook">
+                    It wasn't clear if Wikipedia articles show linguistic
+                    warning signs before becoming contested. A matched-pairs
+                    bilingual study found they do, at AUC 0.79.
+                  </div>
+                </div>
+              </div>
+              <span class="go">View →</span>
+            </a>
+            <a class="cf-row" href="projects/ai-fiction.html">
+              <div class="cf-left">
+                <span class="cf-idx">05</span>
+                <div>
+                  <h4>AI Fiction & Ethics</h4>
+                  <div class="hook">
+                    AI-alignment debates often lack concrete case studies. I
+                    used a 1977 novel about an uncontainable AI to argue why
+                    capability keeps outrunning governance.
+                  </div>
+                </div>
+              </div>
+              <span class="go">View →</span>
+            </a>
+            <a class="cf-row" href="projects/thesis.html">
+              <div class="cf-left">
+                <span class="cf-idx">06</span>
+                <div>
+                  <h4>
+                    Master's Thesis
+                    <span
+                      style="
+                        color: var(--warn);
+                        font-family: var(--mono);
+                        font-size: 11px;
+                      "
+                      >· in progress</span
+                    >
+                  </h4>
+                  <div class="hook">
+                    Istari.ai's company search relied on manual keyword
+                    filters across 20M companies. I benchmarked semantic
+                    retrieval instead, matching OpenAI's API at 5.7x the
+                    speed.
+                  </div>
+                </div>
+              </div>
+              <span class="go">View →</span>
+            </a>
+            <a class="cf-row" href="projects/framing-annotation.html">
+              <div class="cf-left">
+                <span class="cf-idx">07</span>
+                <div>
+                  <h4>Framing Annotation</h4>
+                  <div class="hook">
+                    660K German news paragraphs needed crime-framing labels,
+                    too many to hand-code. An iteratively refined LLM pipeline
+                    reached 98.7% agreement with human coders.
+                  </div>
+                </div>
+              </div>
+              <span class="go">View →</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="other-builds reveal">
+          <div class="ob-label">Also built</div>
+          <div class="ob-grid">
+            <div class="ob-card">
+              <h4>RAG System - HerHackathon 2025 (Beiersdorf)</h4>
+              <p>
+                A Mistral-based modular RAG pipeline linking live social-media
+                trends to Beiersdorf's internal scientific knowledge base
+                (papers, patents, ingredient DBs), with multimodal output and
+                n8n workflow automation for publishing.
+              </p>
+              <div class="ob-meta">Nov 2025 · Hackathon</div>
+            </div>
+            <div class="ob-card">
+              <h4>Electricity Price Forecasting</h4>
+              <p>
+                Forecasted electricity prices for Victoria, Australia using
+                Linear Regression, Random Forest, and Gradient Boosting
+                Regressors on historical market data.
+              </p>
+              <div class="ob-meta">Feb – Jun 2024 · Coursework</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-tag">Toolbox</div>
+          <h2>What I actually reach for</h2>
+        </div>
+        <div class="skills-cloud reveal">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">PyTorch</span>
+          <span class="skill-pill">Transformers / HuggingFace</span>
+          <span class="skill-pill">LangGraph / LangChain</span>
+          <span class="skill-pill">RAG / FAISS</span>
+          <span class="skill-pill">BERT / EmoBERTa / GBERT</span>
+          <span class="skill-pill">LLaMA / Ollama / Mistral</span>
+          <span class="skill-pill">Active Learning</span>
+          <span class="skill-pill">Prompt Engineering</span>
+          <span class="skill-pill">Statistical Modeling (R / statsmodels)</span>
+          <span class="skill-pill">SQL</span>
+          <span class="skill-pill">Streamlit</span>
+          <span class="skill-pill">HPC / SLURM (A100 clusters)</span>
+          <span class="skill-pill">Scikit-learn</span>
+          <span class="skill-pill">Docker</span>
+        </div>
+      </div>
+    </section>
+
+    <footer id="contact">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="section-tag">Get in touch</div>
+          <div class="footer-grid">
+            <h2>Let's build<br />something that works.</h2>
+            <div class="footer-links">
+              <a href="mailto:marmeep23@gmail.com">Email</a>
+              <a
+                href="https://www.linkedin.com/in/marmee-pandya/"
+                target="_blank"
+                rel="noopener"
+                >LinkedIn</a
+              >
+              <a
+                href="https://github.com/marmeepandya/"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <span>Marmee Pandya · University of Mannheim</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+      setTimeout(function () {
+        if (typeof gsap === "undefined") {
+          document.querySelectorAll(".reveal").forEach(function (el) {
+            el.style.opacity = 1;
+            el.style.transform = "none";
+          });
+          document.querySelectorAll(".boot").forEach(function (el) {
+            el.remove();
+          });
+        }
+      }, 2500);
+    </script>
+  </body>
+</html>

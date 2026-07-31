@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Master's Thesis | Marmee Pandya Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="bg-grid"></div>
+    <div class="grain"></div>
+    <div class="cursor-glow"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <nav>
+      <div class="nav-inner">
+        <a class="logo" href="../index.html#top">marmee_pandya<span>()</span></a>
+        <div class="nav-links">
+          <a href="../index.html#work">All work</a>
+          <a href="../index.html#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="case-hero wrap">
+      <a class="back" href="../index.html#work">← Back to all work</a>
+      <div class="case-meta">
+        <span class="meta-pill status-progress">In progress</span>
+        <span class="meta-pill">Master's Thesis · Semester 6</span>
+        <span class="meta-pill">Industry partner: Istari.ai</span>
+      </div>
+      <h1>
+        Semantic search over 20 million companies - benchmarked, not assumed
+      </h1>
+      <p class="hook">
+        Istari.ai's production company-search system relies on manual keyword
+        filters across 232 countries. My thesis asks whether embedding-based
+        semantic retrieval can beat it on quality while staying production-fast
+        - and finds a free, self-hosted model that matches OpenAI's paid API.
+      </p>
+    </header>
+
+    <div class="wrap">
+      <div class="case-media">
+        <img
+          src="../assets/img/thesis/retrieval_quality.png"
+          alt="Bar chart comparing NDCG@10 and Precision@10 for BM25, BGE-large, and OpenAI embeddings"
+          style="background: #fff; padding: 24px"
+        />
+      </div>
+    </div>
+
+    <div class="wrap case-body">
+      <nav class="case-toc">
+        <a href="#problem">Problem</a>
+        <a href="#approach">Approach</a>
+        <a href="#results">Results so far</a>
+        <a href="#status">Current status</a>
+      </nav>
+
+      <div class="case-content">
+        <h2 id="problem">The problem</h2>
+        <p>
+          Istari.ai maintains a "Global Organisation Index" of ~20 million
+          companies, but finding the right one today still relies on manual
+          keyword filters. The thesis question: can embedding-based semantic
+          retrieval, paired with approximate-nearest-neighbor search, beat
+          keyword matching on quality - <strong>and</strong> stay fast enough to
+          run in production? The evaluation corpus: 98,716 companies drawn from
+          101 real production queries, spanning 232 countries and 22 NACE
+          industry sectors.
+        </p>
+
+        <h2 id="approach">The approach</h2>
+        <p>
+          Built and run on the University of Mannheim's HPC cluster (A100 GPUs):
+        </p>
+        <ul>
+          <li>
+            <strong>Baseline:</strong> BM25 (<code>rank_bm25</code>) against
+            three initial dense retrievers via FAISS - MiniLM-L6-v2,
+            BGE-large-en-v1.5, and OpenAI's <code>text-embedding-3-small</code>.
+          </li>
+          <li>
+            <strong>Extended sweep:</strong> five more embedding models,
+            including three 7B-parameter Mistral-based models (E5-Mistral-7B,
+            Linq-Embed-Mistral, SFR-Embedding-Mistral) and GTE-large.
+          </li>
+          <li>
+            <strong>Beyond plain retrieval:</strong> HyDE query expansion,
+            Reciprocal Rank Fusion hybrid retrieval, and cross-encoder reranking
+            (BGE-reranker-v2-m3), validated with an LLM-as-judge relevance
+            check.
+          </li>
+          <li>
+            <strong>Production concerns:</strong> ANN scaling tested up to 2M
+            vectors, plus a full recall error analysis.
+          </li>
+        </ul>
+
+        <h2 id="results">Results so far</h2>
+        <div class="result-grid">
+          <div class="result-card">
+            <div class="n">+37–38%</div>
+            <div class="l">NDCG@10 gain over BM25 (BGE & OpenAI, tied)</div>
+          </div>
+          <div class="result-card">
+            <div class="n">5.7x</div>
+            <div class="l">Faster: BGE (44.4ms) vs. OpenAI API (254.6ms)</div>
+          </div>
+          <div class="result-card">
+            <div class="n">0.946</div>
+            <div class="l">NDCG@10, GTE-large - beats three 7B models</div>
+          </div>
+          <div class="result-card">
+            <div class="n">0.975 → 0.829</div>
+            <div class="l">
+              NDCG@10 drop when HyDE was added (negative result)
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-row">
+          <figure>
+            <img
+              src="../assets/img/thesis/latency_comparison.png"
+              alt="Bar chart comparing query latency between BGE self-hosted and OpenAI API"
+            />
+            <figcaption>
+              OpenAI's latency is dominated by network round-trip (211.7ms), not
+              the model itself.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="../assets/img/thesis/model_size_vs_quality.png"
+              alt="Bar chart comparing GTE-large against three 7B Mistral-based embedding models"
+            />
+            <figcaption>
+              Fine-tuning strategy mattered more than parameter count here.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="callout">
+          <span class="tag-label">A negative result worth keeping</span>
+          <p>
+            HyDE query expansion - generating a hypothetical answer and
+            embedding that instead of the raw query - is a popular trick in RAG
+            pipelines. Here it <strong>hurt</strong> retrieval quality (NDCG@10
+            dropped from 0.975 to 0.829). Not everything that sounds
+            sophisticated helps; this is exactly the kind of result a production
+            team needs before shipping it.
+          </p>
+        </div>
+
+        <p>
+          Reciprocal Rank Fusion of BM25 + MiniLM, on the other hand, matched
+          the MiniLM-only baseline at negligible extra latency (2.2ms) - a much
+          cheaper win than it looks on paper.
+        </p>
+
+        <h2 id="status">Current status</h2>
+        <p>
+          Chapters 1–4 - project overview, the Istari.ai data, and the full
+          experimental results above - are written and based on real numbers
+          from completed experiments. Chapters 5–10 (literature review, extended
+          body chapters, final evaluation, conclusions) are still being drafted.
+          The experiments are done; the narrative write-up is the remaining
+          work. I'll update this page as chapters land.
+        </p>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="case-nav-footer">
+        <a class="btn ghost" href="ai-fiction.html">← AI Fiction & Ethics</a>
+        <a class="btn ghost" href="framing-annotation.html"
+          >Next: Framing Annotation →</a
+        >
+      </div>
+    </div>
+
+    <footer>
+      <div class="wrap footer-bottom">
+        <span>Marmee Pandya · University of Mannheim</span>
+        <a href="mailto:marmeep23@gmail.com">marmeep23@gmail.com</a>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="../script.js"></script>
+    <script>
+      setTimeout(function () {
+        if (typeof gsap === "undefined") {
+          document.querySelectorAll(".reveal").forEach(function (el) {
+            el.style.opacity = 1;
+            el.style.transform = "none";
+          });
+          document.querySelectorAll(".boot").forEach(function (el) {
+            el.remove();
+          });
+        }
+      }, 2500);
+    </script>
+  </body>
+</html>

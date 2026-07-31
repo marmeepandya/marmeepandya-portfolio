@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emotion Regulation ML | Marmee Pandya Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="bg-grid"></div>
+    <div class="grain"></div>
+    <div class="cursor-glow"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <nav>
+      <div class="nav-inner">
+        <a class="logo" href="../index.html#top">marmee_pandya<span>()</span></a>
+        <div class="nav-links">
+          <a href="../index.html#work">All work</a>
+          <a href="../index.html#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="case-hero wrap">
+      <a class="back" href="../index.html#work">← Back to all work</a>
+      <div class="case-meta">
+        <span class="meta-pill status-done">Shipped</span>
+        <span class="meta-pill">Master Team Project · Semester 3</span>
+        <span class="meta-pill">Team of 3</span>
+      </div>
+      <h1>
+        Telling adaptive coping from maladaptive coping - with almost no labels
+      </h1>
+      <p class="hook">
+        A real bereavement-support mHealth app had 28,153 unlabeled evening
+        reflections and only 100 labeled ones. We used active learning to turn
+        that into a model that catches maladaptive coping with perfect recall.
+      </p>
+    </header>
+
+    <div class="wrap">
+      <div class="case-media">
+        <img
+          src="../assets/img/emotion-regulation/Active-Learning.drawio.png"
+          alt="Active learning cycle diagram: unlabeled data, current labelled subset, model retraining, next optimal subset"
+          style="background: #fff; padding: 32px"
+        />
+      </div>
+    </div>
+
+    <div class="wrap case-body">
+      <nav class="case-toc">
+        <a href="#problem">Problem</a>
+        <a href="#approach">Approach</a>
+        <a href="#results">Results</a>
+        <a href="#standout">Why it's different</a>
+      </nav>
+
+      <div class="case-content">
+        <h2 id="problem">The problem</h2>
+        <p>
+          A grief-support app (1,600+ users, 6,500+ journal entries) records how
+          people process loss - but almost none of it is labeled. We had two
+          entry types (journal reflections, evening reflections) and needed to
+          classify each into five emotion-regulation strategies from Gross's
+          process model (Situation Selection, Situation Modification,
+          Attentional Deployment, Cognitive Change, Response Modulation), and -
+          more importantly clinically - into
+          <strong>adaptive vs. maladaptive coping</strong>.
+        </p>
+        <p>
+          Seed labels:
+          <strong>200 journal entries, 100 evening entries.</strong> Unlabeled
+          pool: <strong>7,201 and 28,153 entries</strong> respectively. Labeling
+          more by hand wasn't really an option.
+        </p>
+
+        <h2 id="approach">The approach</h2>
+        <p>We ran an 11-model bake-off before committing to anything:</p>
+        <ul>
+          <li>
+            <strong>Baseline sweep:</strong> ChatGPT prompting → classical ML
+            (Decision Tree, Random Forest, XGBoost, SVM, KNN, Logistic
+            Regression on TF-IDF) → deep learning (NN, RNN, CNN+BiLSTM) →
+            transformers (BERT, then EmoBERTa fine-tuned on MELD/IEMOCAP).
+          </li>
+          <li>
+            <strong>Active learning:</strong> uncertainty sampling on top of
+            EmoBERTa - the model flags which unlabeled entries it's least sure
+            about, and only those get prioritized for (simulated) labeling.
+          </li>
+          <li>
+            <strong>Calibration:</strong> isotonic regression to fix
+            overconfident probability estimates, checked via Expected
+            Calibration Error and Brier score.
+          </li>
+          <li>
+            <strong>Imbalance handling:</strong> focal loss, class-weighted
+            cross-entropy, and up/down-sampling, since maladaptive cases are the
+            minority class that matters most.
+          </li>
+          <li>
+            <strong>Validation:</strong> we didn't just trust our own labels -
+            an independent expert annotator with a psychology background checked
+            labels across active-learning iterations.
+          </li>
+        </ul>
+
+        <figure>
+          <img
+            src="../assets/img/emotion-regulation/Machine Learning.drawio.png"
+            alt="Pipeline diagram of classical ML approach"
+            style="background: #fff; padding: 24px"
+          />
+          <figcaption>
+            Fig - the classical-ML baseline pipeline benchmarked before moving
+            to transformers.
+          </figcaption>
+        </figure>
+
+        <h2 id="results">The results</h2>
+        <div class="result-grid">
+          <div class="result-card">
+            <div class="n">0.46 → 0.80</div>
+            <div class="l">
+              Macro-F1, evening entries (init → active learning)
+            </div>
+          </div>
+          <div class="result-card">
+            <div class="n">0.61</div>
+            <div class="l">
+              Macro-F1, journal entries (vs. 0.35 best classical ML)
+            </div>
+          </div>
+          <div class="result-card">
+            <div class="n">1.00</div>
+            <div class="l">Recall on maladaptive cases, final hybrid model</div>
+          </div>
+          <div class="result-card">
+            <div class="n">0.97</div>
+            <div class="l">ROC-AUC, maladaptive detector</div>
+          </div>
+        </div>
+        <p>
+          Isotonic calibration cut Expected Calibration Error from 0.25 to 0.16,
+          lifting accuracy and F1 to 0.74 with AUC 0.81. The final model was a
+          <strong>hybrid strategy</strong>: pre-train on a class-balanced
+          sample, then fine-tune on the real (imbalanced) distribution -
+          capturing the minority class without losing touch with real-world
+          frequencies.
+        </p>
+
+        <h2 id="standout">Why it's different</h2>
+        <p>
+          This wasn't a Kaggle dataset with a leaderboard to chase - it was real
+          clinical text where a false negative means missing someone who's
+          coping badly with grief. That's why
+          <strong>recall on maladaptive cases</strong>, not accuracy, was the
+          metric we actually optimized for, and why we built in a human-expert
+          validation loop instead of trusting our own annotations.
+        </p>
+        <div class="callout">
+          <span class="tag-label">What I'd do differently</span>
+          <p>
+            With more time, I'd push the active-learning loop into a real
+            deployment cycle - right now it's simulated against a fully-labeled
+            holdout, not run against a live annotator queue.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="case-nav-footer">
+        <a class="btn ghost" href="shopping-assistant.html"
+          >← Shopping Assistant</a
+        >
+        <a class="btn ghost" href="wiki-trends.html">Next: Wiki Edit Wars →</a>
+      </div>
+    </div>
+
+    <footer>
+      <div class="wrap footer-bottom">
+        <span>Marmee Pandya · University of Mannheim</span>
+        <a href="mailto:marmeep23@gmail.com">marmeep23@gmail.com</a>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="../script.js"></script>
+    <script>
+      setTimeout(function () {
+        if (typeof gsap === "undefined") {
+          document.querySelectorAll(".reveal").forEach(function (el) {
+            el.style.opacity = 1;
+            el.style.transform = "none";
+          });
+          document.querySelectorAll(".boot").forEach(function (el) {
+            el.remove();
+          });
+        }
+      }, 2500);
+    </script>
+  </body>
+</html>

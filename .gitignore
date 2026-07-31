@@ -1,0 +1,14 @@
+# Personal source documents -- never publish these publicly
+Resources/
+
+# LaTeX build artifacts
+CV/*.aux
+CV/*.log
+CV/*.out
+CV/*.fls
+CV/*.fdb_latexmk
+CV/*.synctex.gz
+
+# OS / editor junk
+.DS_Store
+*.swp

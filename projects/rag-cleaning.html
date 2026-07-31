@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RAG Data Cleaning | Marmee Pandya Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="bg-grid"></div>
+    <div class="grain"></div>
+    <div class="cursor-glow"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <nav>
+      <div class="nav-inner">
+        <a class="logo" href="../index.html#top">marmee_pandya<span>()</span></a>
+        <div class="nav-links">
+          <a href="../index.html#work">All work</a>
+          <a href="../index.html#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="case-hero wrap">
+      <a class="back" href="../index.html#work">← Back to all work</a>
+      <div class="case-meta">
+        <span class="meta-pill status-done">Shipped</span>
+        <span class="meta-pill">Solving Complex Tasks using LLMs Seminar</span>
+        <span class="meta-pill">Solo project</span>
+      </div>
+      <h1>RAG-driven data cleaning with PyDI</h1>
+      <p class="hook">
+        Some missing product specs - exact SKUs, dimensions, read/write speeds -
+        carry zero signal in the product's own free-text description. An LLM
+        can't guess them from parametric knowledge. Retrieval can: pulling the
+        same product's listing from a different retailer. This pipeline went
+        from 15.6% to 77.1% accuracy imputing exactly that kind of missing data.
+      </p>
+    </header>
+
+    <div class="wrap">
+      <div class="case-media">
+        <img
+          src="../assets/img/rag-cleaning/accuracy_progression.png"
+          alt="Bar chart showing attribute imputation accuracy rising from 15.6% (LLM-only) through 36.5%, 68.8%, 72.9%, 71.9%, up to 77.1% across seven pipeline configurations"
+          style="background: #fff; padding: 24px"
+        />
+      </div>
+    </div>
+
+    <div class="wrap case-body">
+      <nav class="case-toc">
+        <a href="#problem">Problem</a>
+        <a href="#approach">Approach</a>
+        <a href="#results">Results</a>
+        <a href="#standout">Why it's different</a>
+      </nav>
+
+      <div class="case-content">
+        <h2 id="problem">The problem</h2>
+        <p>
+          Product catalogs are full of missing structured attributes - an SSD's
+          exact write speed, a GPU's board height in mm, a USB drive's model
+          number. Sometimes that information genuinely isn't in the free-text
+          description at all, which means no amount of clever prompting or
+          bigger models will recover it: the LLM would just be guessing. But it
+          usually <em>is</em> present - in a different retailer's listing of the
+          same product. That's a retrieval problem, not a language-modeling
+          problem, which makes it a natural fit for RAG.
+        </p>
+        <p>
+          This project follows <strong>RetClean's Scenario 3</strong> (Naeem et
+          al., 2024): a fully local, on-premise, privacy-preserving deployment -
+          no product data leaves the building, in principle.
+        </p>
+
+        <h2 id="approach">The approach</h2>
+        <p>
+          Built as a <code>RAGCleaner</code> component extending
+          <strong>PyDI</strong> - the Python Data Integration framework
+          developed at the University of Mannheim - so the imputation logic
+          composes cleanly with PyDI's entity matching, schema mapping, and
+          <code>DataFusionEngine</code> stages rather than living as a one-off
+          script.
+        </p>
+        <ul>
+          <li>
+            <strong>Data:</strong> WDC Products benchmark - 812 query rows
+            (GPUs, SSDs, HDDs, USB drives) linked to 2,200 knowledge-base rows
+            by <code>cluster_id</code>; 96 evaluation tasks across 7 attributes,
+            each with 100% verified ground-truth coverage.
+          </li>
+          <li>
+            <strong>Pipeline:</strong> embed → retrieve top-20 by cosine
+            similarity → optional CrossEncoder rerank to top-5 → few-shot LLM
+            extraction → parse or abstain (<code>UNKNOWN</code>).
+          </li>
+          <li>
+            <strong>Embeddings compared:</strong> MiniLM (384-dim), BGE-large
+            (1024-dim), OpenAI text-embedding-3-large (3072-dim, cloud).
+          </li>
+          <li>
+            <strong>LLMs compared:</strong> Llama 3.1 8B Instruct (local, via
+            Ollama) vs. GPT-5.4-mini (cloud).
+          </li>
+        </ul>
+
+        <figure>
+          <img
+            src="../assets/img/rag-cleaning/recall_at_k.png"
+            alt="Line chart of Recall@K for MiniLM, BGE, and OpenAI embeddings across K=3,5,10,20, all converging near 1.0 by K=20"
+          />
+          <figcaption>
+            Recall@K across embedding models - the gap that matters is at low K,
+            where reranking has to work with what retrieval hands it.
+          </figcaption>
+        </figure>
+
+        <h2 id="results">The results</h2>
+        <div class="result-grid">
+          <div class="result-card">
+            <div class="n">15.6% → 77.1%</div>
+            <div class="l">
+              Accuracy, LLM-only vs. best pipeline configuration
+            </div>
+          </div>
+          <div class="result-card">
+            <div class="n">+32 pts</div>
+            <div class="l">
+              Single largest gain: adding CrossEncoder reranking
+            </div>
+          </div>
+          <div class="result-card">
+            <div class="n">72.9%</div>
+            <div class="l">
+              Best fully-local, privacy-preserving config (BGE + rerank + Llama)
+            </div>
+          </div>
+          <div class="result-card">
+            <div class="n">3.1%</div>
+            <div class="l">
+              Abstention rate at that configuration (down from 44.8%)
+            </div>
+          </div>
+        </div>
+        <p>
+          The single biggest jump in the whole pipeline wasn't a bigger
+          embedding model or a bigger LLM - it was adding a
+          <strong>CrossEncoder reranker</strong> on top of MiniLM retrieval
+          (68.8%, up from 36.5%). Once retrieval exists at all, candidate
+          precision - not embedding quality, not knowledge-base coverage - is
+          the bottleneck.
+        </p>
+
+        <figure>
+          <img
+            src="../assets/img/rag-cleaning/gpt_vs_llama_calibration.png"
+            alt="Diverging bar chart showing GPT-5.4-mini outperforming Llama 3.1 8B on most attributes under forced prediction, except bus_type where Llama is stronger"
+          />
+          <figcaption>
+            Per-attribute accuracy change, GPT-5.4-mini vs. Llama 3.1 8B, under
+            forced prediction.
+          </figcaption>
+        </figure>
+
+        <div class="callout">
+          <span class="tag-label">The finding I'm most proud of</span>
+          <p>
+            Under normal abstention rules, GPT-5.4-mini looked
+            <em>worse</em> than the smaller local Llama model (60–63% vs.
+            69–73%). That's not a capability gap - it's a calibration artifact.
+            GPT-5.4-mini's abstention threshold was tuned around Llama's more
+            decisive response style, so it over-hedged. Force a prediction
+            instead of letting it abstain, and GPT-5.4-mini jumps to
+            <strong>76–77% - the two best results in the entire study.</strong>
+            The lesson: an evaluation that lets models abstain on their own
+            terms can quietly measure prompt calibration instead of the thing
+            you actually care about.
+          </p>
+        </div>
+
+        <p>
+          That result creates a real tension, though: the best-performing
+          configuration requires sending product data to an external API -
+          directly at odds with the local-only privacy motivation this project
+          started with. My actual recommendation for on-premise deployment stays
+          with <strong>BGE-large + rerank + Llama 3.1 8B at 72.9%</strong>,
+          accepting a 4-point accuracy cost to keep everything in-house.
+        </p>
+
+        <h2 id="standout">Why it's different</h2>
+        <p>
+          A full error analysis on the best cloud configuration breaks down
+          exactly where the remaining ~23% of failures come from: 30% traceable
+          to ambiguous or inconsistent ground truth (not a pipeline failure at
+          all), 22% field confusion (copying write speed when read speed was
+          asked), 22% numeric near-misses from a near-duplicate product, 19%
+          near-identical SKU confusion, and 7% version mismatches. I also tested
+          folding the top-5 retrieved candidates into a single consolidated
+          record before prediction (PyDI's <code>DataFusionEngine</code>) - it
+          cut abstention further but <strong>hurt</strong> accuracy on text
+          attributes (model_number dropped 26 points), because schema-level
+          aggregation can't tell format variation apart from genuinely different
+          values. Reporting that as a negative result, instead of quietly
+          dropping the experiment, is the point.
+        </p>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="case-links">
+        <a
+          class="gh-btn magnetic"
+          href="https://github.com/marmeepandya/RAGCleaner"
+          target="_blank"
+          rel="noopener"
+          >↗ View on GitHub</a
+        >
+      </div>
+      <div class="case-nav-footer">
+        <a class="btn ghost" href="framing-annotation.html"
+          >← Framing Annotation</a
+        >
+        <a class="btn ghost" href="../index.html#work">Back to all work →</a>
+      </div>
+    </div>
+
+    <footer>
+      <div class="wrap footer-bottom">
+        <span>Marmee Pandya · University of Mannheim</span>
+        <a href="mailto:marmeep23@gmail.com">marmeep23@gmail.com</a>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="../script.js"></script>
+    <script>
+      setTimeout(function () {
+        if (typeof gsap === "undefined") {
+          document.querySelectorAll(".reveal").forEach(function (el) {
+            el.style.opacity = 1;
+            el.style.transform = "none";
+          });
+          document.querySelectorAll(".boot").forEach(function (el) {
+            el.remove();
+          });
+        }
+      }, 2500);
+    </script>
+  </body>
+</html>
