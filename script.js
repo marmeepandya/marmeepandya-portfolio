@@ -301,7 +301,7 @@ if (constellation) {
   hub.className = "hub";
   hub.style.setProperty("--x", "50%");
   hub.style.setProperty("--y", "50%");
-  hub.textContent = "MARMEE.DEV";
+  hub.innerHTML = "marmee_<br>pandya()";
   constellation.appendChild(hub);
 
   const nodeEls = {};
