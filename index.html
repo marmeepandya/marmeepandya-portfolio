@@ -82,53 +82,59 @@
             <p>
               I'm finishing my
               <strong>MSc in Data Science at the University of Mannheim</strong
-              >. Across three years of coursework and an industry thesis, one
-              question keeps coming back: how do you get a model to make a
-              genuinely reliable call on messy, real-world, mostly-unlabeled
-              data - and then prove it, not just claim it?
+              >, specializing in <strong>NLP</strong>. Most of what I build
+              sits at the intersection of transformer fine-tuning, retrieval,
+              and LLM agents - systems that have to make a defensible call on
+              messy, real-world, mostly-unlabeled text, and then prove it
+              against a real baseline.
             </p>
             <p>
-              That question has taken different shapes -
+              That's shown up as
               <strong
-                >active learning on 200 labeled grief-journal entries</strong
-              >, a <strong>multi-agent LLM shopping copilot</strong> that has to
-              justify its picks, a
-              <strong>RAG pipeline that imputes missing product specs</strong>
-              instead of hallucinating them, and a
+                >fine-tuning EmoBERTa with active learning from 100-200
+                labeled examples</strong
+              >, a <strong>multi-agent LLM system</strong> that has to justify
+              its recommendations, a
               <strong
-                >semantic search benchmark over 20 million companies</strong
+                >retrieval-augmented pipeline that recovers missing product
+                data</strong
               >
+              instead of letting an LLM hallucinate it, and an
+              <strong>embedding-model benchmark across 20 million companies</strong>
               for an industry thesis partner.
             </p>
             <p>
-              I care less about which model is trendiest and more about whether
-              the result holds up under a baseline nobody asked me to run -
-              which is why most of these case studies include one, plus the
-              negative results I didn't have to report.
+              I care less about which model is trendiest and more about
+              whether the result holds up under a baseline nobody asked me to
+              run - which is why every case study below includes one, plus
+              the negative results I didn't have to report.
             </p>
           </div>
           <div class="stat-grid reveal">
             <div class="stat">
               <div class="num" data-count="98.7" data-suffix="%">0.0%</div>
               <div class="label">
-                LLM–human agreement, media-bias annotation
+                Agreement with trained human annotators, LLM bias annotation
               </div>
             </div>
             <div class="stat">
               <div class="num" data-count="5.7" data-suffix="x">0x</div>
               <div class="label">
-                Faster than OpenAI embeddings, same quality
+                Faster than OpenAI's embedding API, same retrieval quality
               </div>
             </div>
             <div class="stat">
               <div class="num" data-count="77.1" data-suffix="%">0.0%</div>
               <div class="label">
-                RAG imputation accuracy, up from 15.6% LLM-only
+                Attribute-extraction accuracy via retrieval-augmented
+                generation
               </div>
             </div>
             <div class="stat">
-              <div class="num" data-count="0.97" data-suffix="">0.00</div>
-              <div class="label">ROC-AUC, maladaptive-coping detector</div>
+              <div class="num" data-count="100" data-suffix="%">0%</div>
+              <div class="label">
+                Recall on high-risk cases, fine-tuned mental-health classifier
+              </div>
             </div>
           </div>
         </div>
@@ -142,8 +148,8 @@
           <h2>Seven projects, one map</h2>
           <p>
             Hover a node for the headline, click to open the full case study.
-            Six are shipped with verified numbers pulled straight from the
-            signed reports; one - the thesis - is still in flight.
+            Six are finished, with results checked against the original
+            reports; one - the thesis - is still in progress.
           </p>
         </div>
 
@@ -157,10 +163,10 @@
                 <div>
                   <h4>Shopping Assistant</h4>
                   <div class="hook">
-                    Online shoppers face inconsistent specs and noisy reviews.
-                    I built a multi-agent LangGraph pipeline to search,
-                    extract, and rank products automatically, improving
-                    precision by 79% over keyword search.
+                    Built a multi-agent LangGraph pipeline that parses
+                    free-text queries, retrieves live product data, and
+                    reasons over specs and reviews with an LLM - beating a
+                    keyword-search baseline by 79% on ranking precision.
                   </div>
                 </div>
               </div>
@@ -172,10 +178,10 @@
                 <div>
                   <h4>RAG Data Cleaning</h4>
                   <div class="hook">
-                    Missing product specs often carry zero signal in their own
-                    description. My RAG pipeline retrieves them from other
-                    listings instead of guessing, lifting accuracy from 15.6%
-                    to 77.1%.
+                    Built a retrieval-augmented pipeline (dense retrieval +
+                    cross-encoder reranking + few-shot LLM extraction) to
+                    recover product attributes that don't exist in free
+                    text - lifting extraction accuracy from 15.6% to 77.1%.
                   </div>
                 </div>
               </div>
@@ -187,9 +193,10 @@
                 <div>
                   <h4>Emotion Regulation ML</h4>
                   <div class="hook">
-                    A mental-health app had 28,000+ unlabeled entries and only
-                    100-200 labeled ones. Active learning on EmoBERTa turned
-                    that into a model with 0.97 ROC-AUC.
+                    Fine-tuned EmoBERTa with active learning to classify
+                    coping strategies from just 100-200 labeled examples out
+                    of 28,000+ - reaching perfect recall on high-risk cases in
+                    a real mental-health dataset.
                   </div>
                 </div>
               </div>
@@ -201,9 +208,10 @@
                 <div>
                   <h4>Wiki Edit Wars</h4>
                   <div class="hook">
-                    It wasn't clear if Wikipedia articles show linguistic
-                    warning signs before becoming contested. A matched-pairs
-                    bilingual study found they do, at AUC 0.79.
+                    Engineered 7 linguistic features (hedging, affective
+                    stance, attribution bias) to test whether Wikipedia
+                    articles show measurable warning signs before becoming
+                    contested - a bilingual, matched-pairs study at AUC 0.79.
                   </div>
                 </div>
               </div>
@@ -215,9 +223,10 @@
                 <div>
                   <h4>AI Fiction & Ethics</h4>
                   <div class="hook">
-                    AI-alignment debates often lack concrete case studies. I
-                    used a 1977 novel about an uncontainable AI to argue why
-                    capability keeps outrunning governance.
+                    A close reading of a 1977 novel about an uncontainable AI,
+                    used to argue that today's AI-alignment failures are a
+                    structural mismatch between capability growth and
+                    governance - not a hypothetical.
                   </div>
                 </div>
               </div>
@@ -239,10 +248,10 @@
                     >
                   </h4>
                   <div class="hook">
-                    Istari.ai's company search relied on manual keyword
-                    filters across 20M companies. I benchmarked semantic
-                    retrieval instead, matching OpenAI's API at 5.7x the
-                    speed.
+                    Benchmarked 8 embedding models and BM25 for semantic
+                    search over a 20M-company index - a free, self-hosted
+                    model matched OpenAI's embedding API on retrieval quality
+                    while running 5.7x faster.
                   </div>
                 </div>
               </div>
@@ -254,9 +263,10 @@
                 <div>
                   <h4>Framing Annotation</h4>
                   <div class="hook">
-                    660K German news paragraphs needed crime-framing labels,
-                    too many to hand-code. An iteratively refined LLM pipeline
-                    reached 98.7% agreement with human coders.
+                    Iteratively refined LLM prompting (zero-shot → few-shot →
+                    chain-of-thought) to annotate crime framing across 660K
+                    German news paragraphs, reaching 98.7% agreement with
+                    trained human coders (Cohen's κ = 0.839).
                   </div>
                 </div>
               </div>
@@ -323,7 +333,7 @@
         <div class="reveal">
           <div class="section-tag">Get in touch</div>
           <div class="footer-grid">
-            <h2>Let's build<br />something that works.</h2>
+            <h2>If your team has a hard<br />NLP problem, I want in.</h2>
             <div class="footer-links">
               <a href="mailto:marmeep23@gmail.com">Email</a>
               <a
@@ -341,7 +351,7 @@
             </div>
           </div>
           <div class="footer-bottom">
-            <span>Marmee Pandya · University of Mannheim</span>
+            <span>Marmee Pandya</span>
           </div>
         </div>
       </div>

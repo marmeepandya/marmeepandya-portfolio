@@ -220,7 +220,7 @@ const PROJECTS = [
     status: "shipped",
     x: 20,
     y: 20,
-    hook: "Shoppers face inconsistent specs and noisy reviews. A multi-agent LangGraph pipeline ranks products automatically, +79% precision over keyword search.",
+    hook: "Multi-agent LangGraph pipeline reasoning over specs and reviews with an LLM - +79% ranking precision over keyword search.",
     tags: ["LangGraph", "LLaMA 3.1"],
   },
   {
@@ -230,7 +230,7 @@ const PROJECTS = [
     status: "shipped",
     x: 50,
     y: 10,
-    hook: "Missing specs carry zero signal in a product's own description. Retrieving them from other listings lifted accuracy from 15.6% to 77.1%.",
+    hook: "Dense retrieval + cross-encoder reranking + few-shot LLM extraction recovers specs missing from free text - 15.6% to 77.1% accuracy.",
     tags: ["RAG", "PyDI"],
   },
   {
@@ -240,7 +240,7 @@ const PROJECTS = [
     status: "shipped",
     x: 80,
     y: 20,
-    hook: "A mental-health app had 28,000+ unlabeled entries, only 100-200 labeled. Active learning on EmoBERTa reached 0.97 ROC-AUC.",
+    hook: "Fine-tuned EmoBERTa with active learning from 100-200 labeled examples - perfect recall on high-risk cases in testing.",
     tags: ["Active Learning", "EmoBERTa"],
   },
   {
@@ -250,7 +250,7 @@ const PROJECTS = [
     status: "shipped",
     x: 12,
     y: 62,
-    hook: "Unclear if contested Wikipedia articles read differently before the fact. A bilingual matched-pairs study found they do, at AUC 0.79.",
+    hook: "7 engineered linguistic features predict Wikipedia disputes before they're flagged - bilingual matched-pairs study, AUC 0.79.",
     tags: ["NLP", "Stats"],
   },
   {
@@ -270,7 +270,7 @@ const PROJECTS = [
     status: "progress",
     x: 32,
     y: 90,
-    hook: "Istari.ai's search relied on manual keyword filters over 20M companies. Semantic retrieval matched OpenAI's API at 5.7x the speed.",
+    hook: "Benchmarked 8 embedding models + BM25 over a 20M-company index - self-hosted model matched OpenAI's embedding API at 5.7x the speed.",
     tags: ["Embeddings", "FAISS"],
   },
   {
@@ -313,7 +313,7 @@ if (constellation) {
     a.style.setProperty("--y", p.y + "%");
     a.style.setProperty("--dur", 5.5 + (i % 3) + "s");
     a.style.setProperty("--delay", i * 0.4 + "s");
-    a.innerHTML = `<div class="n-idx">0${i + 1}</div><div class="n-title">${p.title}</div><div class="n-status ${p.status === "progress" ? "progress" : ""}">${p.status === "progress" ? "In progress" : "Shipped"}</div>`;
+    a.innerHTML = `<div class="n-idx">0${i + 1}</div><div class="n-title">${p.title}</div>${p.status === "progress" ? '<div class="n-status progress">In progress</div>' : ""}`;
     constellation.appendChild(a);
     nodeEls[p.id] = a;
 
