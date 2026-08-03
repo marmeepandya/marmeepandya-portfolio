@@ -1,200 +1,209 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shopping Assistant | Marmee Pandya Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../styles.css" />
-  </head>
-  <body>
-    <div class="bg-grid"></div>
-    <div class="grain"></div>
-    <div class="cursor-glow"></div>
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"></div>
 
-    <nav>
-      <div class="nav-inner">
-        <a class="logo" href="../index.html#top">marmee_pandya<span>()</span></a>
-        <div class="nav-links">
-          <a href="../index.html#work">All work</a>
-          <a href="../index.html#contact">Contact</a>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopping Assistant | Marmee Pandya Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+
+<body>
+  <div class="bg-grid"></div>
+  <div class="grain"></div>
+  <div class="cursor-glow"></div>
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <nav>
+    <div class="nav-inner">
+      <a class="logo" href="../index.html#top">marmee_pandya<span>()</span></a>
+      <div class="nav-links">
+        <a href="../index.html#work">All work</a>
+        <a href="../index.html#contact">Contact</a>
       </div>
+    </div>
+  </nav>
+
+  <header class="case-hero wrap">
+    <a class="back" href="../index.html#work">← Back to all work</a>
+    <div class="case-meta">
+      <span class="meta-pill">LLM & Agents</span>
+    </div>
+    <h1>A multi-agent shopping copilot that reads reviews before you do</h1>
+    <p class="hook">
+      Online shoppers drown in near-identical specs and inconsistent reviews.
+      We built a LangGraph agent pipeline that turns a plain-language query
+      and budget into a ranked, justified top-3 recommendation - and it beat a
+      keyword-search baseline by 79% on precision.
+    </p>
+  </header>
+
+  <div class="wrap">
+    <div class="case-media">
+      <video src="../assets/video/demo.mp4" controls preload="metadata" playsinline></video>
+    </div>
+  </div>
+
+  <div class="wrap case-body">
+    <nav class="case-toc">
+      <a href="#problem">Problem</a>
+      <a href="#approach">Approach</a>
+      <a href="#results">Results</a>
+      <a href="#standout">Why it's different</a>
     </nav>
 
-    <header class="case-hero wrap">
-      <a class="back" href="../index.html#work">← Back to all work</a>
-      <div class="case-meta">
-        <span class="meta-pill">LLM & Agents · Semester 4</span>
-        <span class="meta-pill">Team of 5</span>
-      </div>
-      <h1>A multi-agent shopping copilot that reads reviews before you do</h1>
-      <p class="hook">
-        Online shoppers drown in near-identical specs and inconsistent reviews.
-        We built a LangGraph agent pipeline that turns a plain-language query
-        and budget into a ranked, justified top-3 recommendation - and it beat a
-        keyword-search baseline by 79% on precision.
+    <div class="case-content">
+      <h2 id="problem">The problem</h2>
+      <p>
+        Product pages promise clarity and deliver noise: inconsistent spec
+        sheets, review counts that don't tell you if a product is actually
+        good, and dozens of near-duplicate listings. We wanted an assistant
+        that could take a query like
+        <em>"quiet stand mixer under $150"</em> and hand back three options
+        with an actual argument for each, not just a sorted list.
       </p>
-    </header>
 
-    <div class="wrap">
-      <div class="case-media">
-        <video
-          src="../assets/video/demo.mp4"
-          controls
-          preload="metadata"
-          playsinline
-        ></video>
-      </div>
-    </div>
+      <h2 id="approach">The approach</h2>
+      <p>
+        We built a <strong>LangGraph</strong> multi-agent pipeline with five
+        stages:
+        <code>process_query → search_products → extract_specifications →
+            rank_products → generate_recommendations</code>.
+      </p>
+      <ul>
+        <li>
+          <strong>Retrieval:</strong> SERPAPI pulls up to 20 live Google
+          Shopping results per query; Tavily enriches each with spec sheets
+          and review text.
+        </li>
+        <li>
+          <strong>Reasoning:</strong> we benchmarked Gemini 2.0 Flash,
+          and DeepSeek-Coder before settling on
+          <strong>LLaMA 3.1 via Ollama</strong> - it won on cost and
+          reliability for this pipeline, not raw benchmark scores.
+        </li>
+        <li>
+          <strong>Scoring:</strong> ranking is review-count-aware - a product
+          with 4 reviews doesn't get to outrank one with 400 just because its
+          average is slightly higher.
+        </li>
+        <li>
+          <strong>Interface:</strong> a Streamlit front end with product
+          cards, score breakdowns, and CSV export, so the output is something
+          a real person would actually use.
+        </li>
+      </ul>
 
-    <div class="wrap case-body">
-      <nav class="case-toc">
-        <a href="#problem">Problem</a>
-        <a href="#approach">Approach</a>
-        <a href="#results">Results</a>
-        <a href="#standout">Why it's different</a>
-      </nav>
-
-      <div class="case-content">
-        <h2 id="problem">The problem</h2>
-        <p>
-          Product pages promise clarity and deliver noise: inconsistent spec
-          sheets, review counts that don't tell you if a product is actually
-          good, and dozens of near-duplicate listings. We wanted an assistant
-          that could take a query like
-          <em>"quiet stand mixer under $150"</em> and hand back three options
-          with an actual argument for each, not just a sorted list.
-        </p>
-
-        <h2 id="approach">The approach</h2>
-        <p>
-          We built a <strong>LangGraph</strong> multi-agent pipeline with five
-          stages:
-          <code
-            >process_query → search_products → extract_specifications →
-            rank_products → generate_recommendations</code
-          >.
-        </p>
-        <ul>
-          <li>
-            <strong>Retrieval:</strong> SERPAPI pulls up to 20 live Google
-            Shopping results per query; Tavily enriches each with spec sheets
-            and review text.
-          </li>
-          <li>
-            <strong>Reasoning:</strong> we benchmarked Gemini 2.0 Flash,
-            DeepSeek-Coder, GPT-4, and Claude before settling on
-            <strong>LLaMA 3.1 via Ollama</strong> - it won on cost and
-            reliability for this pipeline, not raw benchmark scores.
-          </li>
-          <li>
-            <strong>Scoring:</strong> ranking is review-count-aware - a product
-            with 4 reviews doesn't get to outrank one with 400 just because its
-            average is slightly higher.
-          </li>
-          <li>
-            <strong>Interface:</strong> a Streamlit front end with product
-            cards, score breakdowns, and CSV export, so the output is something
-            a real person would actually use.
-          </li>
-        </ul>
-
-        <h2 id="results">The results</h2>
-        <p>
-          Evaluated against human-annotated ground-truth rankings across 20 real
-          queries:
-        </p>
-        <div class="result-grid">
-          <div class="result-card">
-            <div class="n">0.565</div>
-            <div class="l">Precision@10 (vs. 0.315 baseline)</div>
-          </div>
-          <div class="result-card">
-            <div class="n">0.755</div>
-            <div class="l">MRR@10 (vs. 0.580 baseline)</div>
-          </div>
-          <div class="result-card">
-            <div class="n">0.819</div>
-            <div class="l">NDCG@10 (vs. 0.672 baseline)</div>
-          </div>
-          <div class="result-card">
-            <div class="n">~30s</div>
-            <div class="l">End-to-end pipeline latency</div>
-          </div>
+      <h2 id="results">The results</h2>
+      <p>
+        Evaluated against human-annotated ground-truth rankings across 20 real
+        queries:
+      </p>
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="n">0.565</div>
+          <div class="l">Precision@10 (vs. 0.315 baseline)</div>
         </div>
-        <p>
-          That's a 25-point precision gain over keyword search, and it runs fast
-          enough that nobody's waiting around for it.
-        </p>
-
-        <h2 id="standout">Why it's different</h2>
-        <p>
-          Most course projects stop at a notebook. This one is a
-          <strong>working app</strong> - <code>app.py</code>, a Streamlit UI, a
-          <code>.env</code> config, and a recorded demo (above) - because a
-          recommendation system you can't click through isn't really a
-          recommendation system.
-        </p>
-        <div class="callout">
-          <span class="tag-label">Design decision</span>
-          <p>
-            We picked LLaMA 3.1 over larger closed models after direct
-            comparison - not because it scored highest on paper, but because it
-            was the most reliable and cheapest to run at the query volume we
-            needed. Model choice is a systems decision, not a leaderboard
-            lookup.
-          </p>
+        <div class="result-card">
+          <div class="n">0.755</div>
+          <div class="l">MRR@10 (vs. 0.580 baseline)</div>
+        </div>
+        <div class="result-card">
+          <div class="n">0.819</div>
+          <div class="l">NDCG@10 (vs. 0.672 baseline)</div>
+        </div>
+        <div class="result-card">
+          <div class="n">~30s</div>
+          <div class="l">End-to-end pipeline latency</div>
         </div>
       </div>
-    </div>
+      <p>
+        That's a 25-point precision gain over keyword search, and it runs fast
+        enough that nobody's waiting around for it.
+      </p>
 
+      <h2 id="standout">Why it's different</h2>
+      <p>
+        Most course projects stop at a notebook. This one is a
+        <strong>working app</strong> - <code>app.py</code>, a Streamlit UI, a
+        <code>.env</code> config, and a recorded demo (above) - because a
+        recommendation system you can't click through isn't really a
+        recommendation system.
+      </p>
+      <div class="callout">
+        <span class="tag-label">Design decision</span>
+        <p>
+          We picked LLaMA 3.1 over larger closed models after direct
+          comparison - not because it scored highest on paper, but because it
+          was the most reliable and cheapest to run at the query volume we
+          needed. Model choice is a systems decision, not a leaderboard
+          lookup.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="case-links">
+      <a class="gh-btn magnetic" href="https://github.com/marmeepandya/OnlineShoppingAssistant" target="_blank"
+        rel="noopener">↗ View on GitHub</a>
+    </div>
+    <div class="case-nav-footer">
+      <a class="btn ghost" href="../index.html#work">← All case studies</a>
+      <a class="btn ghost" href="emotion-regulation.html">Next: Emotion Regulation ML →</a>
+    </div>
+  </div>
+
+  <footer id="contact">
     <div class="wrap">
-      <div class="case-links">
-        <a
-          class="gh-btn magnetic"
-          href="https://github.com/marmeepandya/OnlineShoppingAssistant"
-          target="_blank"
-          rel="noopener"
-          >↗ View on GitHub</a
-        >
-      </div>
-      <div class="case-nav-footer">
-        <a class="btn ghost" href="../index.html#work">← All case studies</a>
-        <a class="btn ghost" href="emotion-regulation.html"
-          >Next: Emotion Regulation ML →</a
-        >
+      <div class="reveal">
+        <div class="section-tag">Get in touch</div>
+        <div class="footer-grid">
+          <h2>If your team has a hard<br />NLP problem, I want in.</h2>
+          <div class="footer-links">
+            <a href="mailto:marmeep23@gmail.com">Email</a>
+            <a
+              href="https://www.linkedin.com/in/marmee-pandya/"
+              target="_blank"
+              rel="noopener"
+              >LinkedIn</a
+            >
+            <a
+              href="https://github.com/marmeepandya/"
+              target="_blank"
+              rel="noopener"
+              >GitHub</a
+            >
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>Marmee Pandya</span>
+        </div>
       </div>
     </div>
+  </footer>
 
-    <footer>
-      <div class="wrap footer-bottom">
-        <span>Marmee Pandya</span>
-        <a href="mailto:marmeep23@gmail.com">marmeep23@gmail.com</a>
-      </div>
-    </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="../script.js"></script>
+  <script>
+    setTimeout(function () {
+      if (typeof gsap === "undefined") {
+        document.querySelectorAll(".reveal").forEach(function (el) {
+          el.style.opacity = 1;
+          el.style.transform = "none";
+        });
+        document.querySelectorAll(".boot").forEach(function (el) {
+          el.remove();
+        });
+      }
+    }, 2500);
+  </script>
+</body>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="../script.js"></script>
-    <script>
-      setTimeout(function () {
-        if (typeof gsap === "undefined") {
-          document.querySelectorAll(".reveal").forEach(function (el) {
-            el.style.opacity = 1;
-            el.style.transform = "none";
-          });
-          document.querySelectorAll(".boot").forEach(function (el) {
-            el.remove();
-          });
-        }
-      }, 2500);
-    </script>
-  </body>
 </html>
