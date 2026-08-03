@@ -125,6 +125,17 @@
             </div>
           </div>
         </div>
+        <p>
+          The 5.7x speedup isn't a modeling trick - it's the difference
+          between calling a model that runs on the same machine as the
+          search index versus calling a remote API over the network. Of
+          OpenAI's 254.6ms, 211.7ms is network round-trip; the embedding
+          computation itself is comparably fast. Once you self-host, that
+          round-trip disappears. The result worth reporting isn't "faster,"
+          it's that a <strong>free model matches a paid one on quality</strong>
+          at all - the latency gap is just what you get for free on top of
+          that.
+        </p>
 
         <div class="chart-row">
           <figure>

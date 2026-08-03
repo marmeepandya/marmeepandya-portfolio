@@ -270,7 +270,7 @@ const PROJECTS = [
     status: "progress",
     x: 32,
     y: 90,
-    hook: "Benchmarked 8 embedding models + BM25 over a 20M-company index - self-hosted model matched OpenAI's embedding API at 5.7x the speed.",
+    hook: "Benchmarked 8 embedding models + BM25 over a 20M-company index - matched OpenAI's API on quality, beat it on speed by cutting the network round-trip.",
     tags: ["Embeddings", "FAISS"],
   },
   {
@@ -280,7 +280,7 @@ const PROJECTS = [
     status: "shipped",
     x: 66,
     y: 92,
-    hook: "660K German news paragraphs needed crime-framing labels. An iteratively refined LLM pipeline reached 98.7% agreement with human coders.",
+    hook: "660K German news paragraphs needed crime-framing labels. Reached 98.7% agreement with the human-consensus label on a 600-paragraph sample (8 disagreements).",
     tags: ["LLM Annotation", "German NLP"],
   },
 ];

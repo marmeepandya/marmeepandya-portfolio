@@ -44,7 +44,8 @@
         660K German news paragraphs mention ethnic and social groups, masked
         during coding to reduce bias. The question: can an LLM, guided by
         iteratively refined instructions, code crime framing as reliably as a
-        trained human annotator? Final answer: 98.7% agreement, κ = 0.839.
+        trained human annotator? Final answer, on a 600-paragraph held-out
+        sample: 98.7% agreement, κ = 0.839.
       </p>
     </header>
 
@@ -152,6 +153,21 @@
           chain-of-thought, a real regression) to 0.849 (zero-shot again, after
           refining the instructions) to 0.920 (final).
         </p>
+        <div class="callout">
+          <span class="tag-label">Why the LLM number is higher than the human number</span>
+          <p>
+            The LLM's κ = 0.839 is measured against the <strong>resolved
+            human-consensus label</strong>, not against any single annotator -
+            while the human α = 0.616 measures two individual coders agreeing
+            with each other from scratch, before resolution. Those are
+            different, harder-to-compare targets: matching a cleaned
+            consensus label is an easier bar than two people independently
+            agreeing on an ambiguous case. The LLM's own prediction was also a
+            10-repeat majority vote, which reduces its noise the same way a
+            panel of human coders would. Reported side by side on purpose, not
+            to imply the model "beats" human judgment.
+          </p>
+        </div>
 
         <div class="chart-row">
           <figure>
