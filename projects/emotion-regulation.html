@@ -33,14 +33,11 @@
       <div class="case-meta">
         <span class="meta-pill">Master Team Project</span>
       </div>
-      <h1>
-        Telling adaptive coping from maladaptive coping - with almost no labels
-      </h1>
+      <h1>Telling adaptive coping from maladaptive coping - with almost no labels</h1>
       <p class="hook">
-        A real bereavement-support mHealth app had 28,153 unlabeled evening
-        reflections and only 100 labeled ones. We used active learning to turn
-        that into a model that missed zero maladaptive-coping cases in
-        testing.
+        A real bereavement-support mHealth app had 28,153 unlabeled evening reflections and only 100
+        labeled ones. We used active learning to turn that into a model that missed zero
+        maladaptive-coping cases in testing.
       </p>
     </header>
 
@@ -65,50 +62,45 @@
       <div class="case-content">
         <h2 id="problem">The problem</h2>
         <p>
-          A grief-support app (1,600+ users, 6,500+ journal entries) records how
-          people process loss - but almost none of it is labeled. We had two
-          entry types (journal reflections, evening reflections) and needed to
-          classify each into five emotion-regulation strategies from Gross's
-          process model (Situation Selection, Situation Modification,
-          Attentional Deployment, Cognitive Change, Response Modulation), and -
-          more importantly clinically - into
+          A grief-support app (1,600+ users, 6,500+ journal entries) records how people process loss
+          - but almost none of it is labeled. We had two entry types (journal reflections, evening
+          reflections) and needed to classify each into five emotion-regulation strategies from
+          Gross's process model (Situation Selection, Situation Modification, Attentional
+          Deployment, Cognitive Change, Response Modulation), and - more importantly clinically -
+          into
           <strong>adaptive vs. maladaptive coping</strong>.
         </p>
         <p>
           Seed labels:
-          <strong>200 journal entries, 100 evening entries.</strong> Unlabeled
-          pool: <strong>7,201 and 28,153 entries</strong> respectively. Labeling
-          more by hand wasn't really an option.
+          <strong>200 journal entries, 100 evening entries.</strong> Unlabeled pool:
+          <strong>7,201 and 28,153 entries</strong> respectively. Labeling more by hand wasn't
+          really an option.
         </p>
 
         <h2 id="approach">The approach</h2>
         <p>We ran an 11-model bake-off before committing to anything:</p>
         <ul>
           <li>
-            <strong>Baseline sweep:</strong> ChatGPT prompting → classical ML
-            (Decision Tree, Random Forest, XGBoost, SVM, KNN, Logistic
-            Regression on TF-IDF) → deep learning (NN, RNN, CNN+BiLSTM) →
-            transformers (BERT, then EmoBERTa fine-tuned on MELD/IEMOCAP).
+            <strong>Baseline sweep:</strong> ChatGPT prompting → classical ML (Decision Tree, Random
+            Forest, XGBoost, SVM, KNN, Logistic Regression on TF-IDF) → deep learning (NN, RNN,
+            CNN+BiLSTM) → transformers (BERT, then EmoBERTa fine-tuned on MELD/IEMOCAP).
           </li>
           <li>
-            <strong>Active learning:</strong> uncertainty sampling on top of
-            EmoBERTa - the model flags which unlabeled entries it's least sure
-            about, and only those get prioritized for (simulated) labeling.
+            <strong>Active learning:</strong> uncertainty sampling on top of EmoBERTa - the model
+            flags which unlabeled entries it's least sure about, and only those get prioritized for
+            (simulated) labeling.
           </li>
           <li>
-            <strong>Calibration:</strong> isotonic regression to fix
-            overconfident probability estimates, checked via Expected
-            Calibration Error and Brier score.
+            <strong>Calibration:</strong> isotonic regression to fix overconfident probability
+            estimates, checked via Expected Calibration Error and Brier score.
           </li>
           <li>
-            <strong>Imbalance handling:</strong> focal loss, class-weighted
-            cross-entropy, and up/down-sampling, since maladaptive cases are the
-            minority class that matters most.
+            <strong>Imbalance handling:</strong> focal loss, class-weighted cross-entropy, and
+            up/down-sampling, since maladaptive cases are the minority class that matters most.
           </li>
           <li>
-            <strong>Validation:</strong> we didn't just trust our own labels -
-            an independent expert annotator with a psychology background checked
-            labels across active-learning iterations.
+            <strong>Validation:</strong> we didn't just trust our own labels - an independent expert
+            annotator with a psychology background checked labels across active-learning iterations.
           </li>
         </ul>
 
@@ -119,8 +111,7 @@
             style="background: #fff; padding: 24px"
           />
           <figcaption>
-            Fig - the classical-ML baseline pipeline benchmarked before moving
-            to transformers.
+            Fig - the classical-ML baseline pipeline benchmarked before moving to transformers.
           </figcaption>
         </figure>
 
@@ -128,15 +119,11 @@
         <div class="result-grid">
           <div class="result-card">
             <div class="n">0.46 → 0.80</div>
-            <div class="l">
-              Macro-F1, evening entries (init → active learning)
-            </div>
+            <div class="l">Macro-F1, evening entries (init → active learning)</div>
           </div>
           <div class="result-card">
             <div class="n">0.61</div>
-            <div class="l">
-              Macro-F1, journal entries (vs. 0.35 best classical ML)
-            </div>
+            <div class="l">Macro-F1, journal entries (vs. 0.35 best classical ML)</div>
           </div>
           <div class="result-card">
             <div class="n">0.75</div>
@@ -148,29 +135,27 @@
           </div>
         </div>
         <p>
-          Isotonic calibration cut Expected Calibration Error from 0.25 to 0.16,
-          lifting accuracy and F1 to 0.74 with AUC 0.81. The final model was a
-          <strong>hybrid strategy</strong>: pre-train on a class-balanced
-          sample, then fine-tune on the real (imbalanced) distribution -
-          capturing the minority class without losing touch with real-world
-          frequencies.
+          Isotonic calibration cut Expected Calibration Error from 0.25 to 0.16, lifting accuracy
+          and F1 to 0.74 with AUC 0.81. The final model was a
+          <strong>hybrid strategy</strong>: pre-train on a class-balanced sample, then fine-tune on
+          the real (imbalanced) distribution - capturing the minority class without losing touch
+          with real-world frequencies.
         </p>
 
         <h2 id="standout">Why it's different</h2>
         <p>
-          This wasn't a Kaggle dataset with a leaderboard to chase - it was real
-          clinical text where a false negative means missing someone who's
-          coping badly with grief. That's why
-          <strong>recall on maladaptive cases</strong>, not accuracy, was the
-          metric we actually optimized for, and why we built in a human-expert
-          validation loop instead of trusting our own annotations.
+          This wasn't a Kaggle dataset with a leaderboard to chase - it was real clinical text where
+          a false negative means missing someone who's coping badly with grief. That's why
+          <strong>recall on maladaptive cases</strong>, not accuracy, was the metric we actually
+          optimized for, and why we built in a human-expert validation loop instead of trusting our
+          own annotations.
         </p>
         <div class="callout">
           <span class="tag-label">What I'd do differently</span>
           <p>
-            With more time, I'd push the active-learning loop into a real
-            deployment cycle - right now it's simulated against a fully-labeled
-            holdout, not run against a live annotator queue.
+            With more time, I'd push the active-learning loop into a real deployment cycle - right
+            now it's simulated against a fully-labeled holdout, not run against a live annotator
+            queue.
           </p>
         </div>
       </div>
@@ -178,9 +163,7 @@
 
     <div class="wrap">
       <div class="case-nav-footer">
-        <a class="btn ghost" href="shopping-assistant.html"
-          >← Shopping Assistant</a
-        >
+        <a class="btn ghost" href="shopping-assistant.html">← Shopping Assistant</a>
         <a class="btn ghost" href="wiki-trends.html">Next: Wiki Edit Wars →</a>
       </div>
     </div>
@@ -193,18 +176,10 @@
             <h2>If your team has a hard<br />NLP problem, I want in.</h2>
             <div class="footer-links">
               <a href="mailto:marmeep23@gmail.com">Email</a>
-              <a
-                href="https://www.linkedin.com/in/marmee-pandya/"
-                target="_blank"
-                rel="noopener"
+              <a href="https://www.linkedin.com/in/marmee-pandya/" target="_blank" rel="noopener"
                 >LinkedIn</a
               >
-              <a
-                href="https://github.com/marmeepandya/"
-                target="_blank"
-                rel="noopener"
-                >GitHub</a
-              >
+              <a href="https://github.com/marmeepandya/" target="_blank" rel="noopener">GitHub</a>
             </div>
           </div>
           <div class="footer-bottom">
