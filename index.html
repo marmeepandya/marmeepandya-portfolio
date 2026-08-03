@@ -130,9 +130,9 @@
               </div>
             </div>
             <div class="stat">
-              <div class="num" data-count="100" data-suffix="%">0%</div>
+              <div class="num" data-count="0.97" data-suffix="">0.00</div>
               <div class="label">
-                Recall on high-risk cases, fine-tuned mental-health classifier
+                ROC-AUC flagging high-risk cases, mental-health NLP classifier
               </div>
             </div>
           </div>
@@ -193,8 +193,8 @@
                   <div class="hook">
                     Fine-tuned EmoBERTa with active learning to classify
                     coping strategies from just 100-200 labeled examples out
-                    of 28,000+ - reaching perfect recall on high-risk cases in
-                    a real mental-health dataset.
+                    of 28,000+ - the final model missed zero high-risk cases
+                    on the held-out test set (ROC-AUC 0.97).
                   </div>
                 </div>
               </div>

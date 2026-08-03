@@ -240,7 +240,7 @@ const PROJECTS = [
     status: "shipped",
     x: 80,
     y: 20,
-    hook: "Fine-tuned EmoBERTa with active learning from 100-200 labeled examples - perfect recall on high-risk cases in testing.",
+    hook: "Fine-tuned EmoBERTa with active learning from 100-200 labeled examples - missed zero high-risk cases on the held-out test set (ROC-AUC 0.97).",
     tags: ["Active Learning", "EmoBERTa"],
   },
   {
