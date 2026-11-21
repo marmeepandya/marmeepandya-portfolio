@@ -220,7 +220,7 @@ const PROJECTS = [
     status: "shipped",
     x: 20,
     y: 20,
-    hook: "Multi-agent LangGraph pipeline reasoning over specs and reviews with an LLM - +79% ranking precision over keyword search.",
+    hook: "LangGraph pipeline that turns a plain-language request into three ranked products. Precision@10 0.565 vs. 0.315 for keyword search.",
     tags: ["LangGraph", "LLaMA 3.1"],
   },
   {
@@ -230,7 +230,7 @@ const PROJECTS = [
     status: "shipped",
     x: 50,
     y: 10,
-    hook: "Dense retrieval + cross-encoder reranking + few-shot LLM extraction recovers specs missing from free text - 15.6% to 77.1% accuracy.",
+    hook: "Retrieval, reranking and LLM extraction fill in missing product attributes. Accuracy from 15.6% to 72.9% with a fully local setup.",
     tags: ["RAG", "PyDI"],
   },
   {
@@ -240,7 +240,7 @@ const PROJECTS = [
     status: "shipped",
     x: 80,
     y: 20,
-    hook: "Fine-tuned EmoBERTa with active learning from 100-200 labeled examples - missed zero high-risk cases on the held-out test set (ROC-AUC 0.97).",
+    hook: "Active learning on EmoBERTa from 100 to 200 labels. The maladaptive-coping detector reached ROC-AUC 0.97 on a small test set.",
     tags: ["Active Learning", "EmoBERTa"],
   },
   {
@@ -250,7 +250,7 @@ const PROJECTS = [
     status: "shipped",
     x: 12,
     y: 62,
-    hook: "7 engineered linguistic features predict Wikipedia disputes before they're flagged - bilingual matched-pairs study, AUC 0.79.",
+    hook: "Matched pairs of contested and stable English and German articles, compared on 7 linguistic features. ROC-AUC 0.79.",
     tags: ["NLP", "Stats"],
   },
   {
@@ -260,17 +260,17 @@ const PROJECTS = [
     status: "shipped",
     x: 88,
     y: 58,
-    hook: "AI-alignment debates often lack concrete cases. A 1977 novel about an uncontainable AI argues why capability keeps outrunning governance.",
+    hook: "A seminar paper reading a 1977 novel about an uncontainable program as a story about capability outgrowing governance.",
     tags: ["AI Ethics"],
   },
   {
     id: "thesis",
     href: "projects/thesis.html",
     title: "Master's Thesis",
-    status: "progress",
+    status: "shipped",
     x: 32,
     y: 90,
-    hook: "Benchmarked 8 embedding models + BM25 over a 20M-company index - matched OpenAI's API on quality, beat it on speed by cutting the network round-trip.",
+    hook: "Semantic company search for Istari.ai, plus an independent relevance standard: production's top 1,000 misses about a quarter of the relevant companies.",
     tags: ["Embeddings", "FAISS"],
   },
   {
@@ -280,7 +280,7 @@ const PROJECTS = [
     status: "shipped",
     x: 66,
     y: 92,
-    hook: "660K German news paragraphs needed crime-framing labels. Reached 98.7% agreement with the human-consensus label on a 600-paragraph sample (8 disagreements).",
+    hook: "LLM coding of crime framing in 660K German news paragraphs, validated against human coders at κ = 0.839.",
     tags: ["LLM Annotation", "German NLP"],
   },
 ];

@@ -5,3 +5,7 @@ CV/
 # OS / editor junk
 .DS_Store
 *.swp
+
+# Personal certificates and transcripts -- never publish
+*Transcript*.pdf
+Degree Certificate.pdf

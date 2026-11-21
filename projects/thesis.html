@@ -31,150 +31,146 @@
     <header class="case-hero wrap">
       <a class="back" href="../index.html#work">← Back to all work</a>
       <div class="case-meta">
-        <span class="meta-pill status-progress">In progress</span>
-        <span class="meta-pill">Master's Thesis · Semester 6</span>
+        <span class="meta-pill status-done">Submitted 15 Sep 2026 · grade pending</span>
+        <span class="meta-pill">Master's thesis</span>
         <span class="meta-pill">Industry partner: Istari.ai</span>
       </div>
-      <h1>Semantic search over 20 million companies - benchmarked, not assumed</h1>
+      <h1>Semantic company search, and how to evaluate it without labels</h1>
       <p class="hook">
-        Istari.ai's production company-search system relies on manual keyword filters across 232
-        countries. My thesis asks whether embedding-based semantic retrieval can beat it on quality
-        while staying production-fast - and finds a free, self-hosted model that matches OpenAI's
-        paid API.
+        Istari.ai's company search uses keyword filters over a database of about 20 million
+        companies. I tested whether embedding-based retrieval finds companies the keyword system
+        misses. The harder question turned out to be the evaluation, because the only relevance
+        labels available came from the production system itself.
       </p>
     </header>
-
-    <div class="wrap">
-      <div class="case-media">
-        <img
-          src="../assets/img/thesis/retrieval_quality.png"
-          alt="Bar chart comparing NDCG@10 and Precision@10 for BM25, BGE-large, and OpenAI embeddings"
-          style="background: #fff; padding: 24px"
-        />
-      </div>
-    </div>
 
     <div class="wrap case-body">
       <nav class="case-toc">
         <a href="#problem">Problem</a>
         <a href="#approach">Approach</a>
-        <a href="#results">Results so far</a>
-        <a href="#status">Current status</a>
+        <a href="#results">Results</a>
+        <a href="#limits">Limitations</a>
       </nav>
 
       <div class="case-content">
         <h2 id="problem">The problem</h2>
         <p>
-          Istari.ai maintains a "Global Organisation Index" of ~20 million companies, but finding
-          the right one today still relies on manual keyword filters. The thesis question: can
-          embedding-based semantic retrieval, paired with approximate-nearest-neighbor search, beat
-          keyword matching on quality - <strong>and</strong> stay fast enough to run in production?
-          The evaluation corpus: 98,716 companies drawn from 101 real production queries, spanning
-          232 countries and 22 NACE industry sectors.
+          A company can be a perfect match for a query and still not show up in keyword search,
+          because its description uses different words. A search for "renewable energy
+          consultancy" will not find a company that calls itself a "sustainability advisory
+          service". Embedding-based retrieval should help with this, but at Istari's scale it also
+          has to stay fast.
+        </p>
+        <p>
+          I worked with a corpus of 98,716 companies built from 101 real production queries,
+          covering 232 countries and 22 NACE industry sectors. Nobody has labelled this data for
+          relevance, so the obvious benchmark is production's own results. That benchmark is
+          circular: if production defines what counts as relevant, no other system can ever be
+          shown to find something production missed.
         </p>
 
         <h2 id="approach">The approach</h2>
-        <p>Built and run on the University of Mannheim's HPC cluster (A100 GPUs):</p>
+        <p>The work ran in four phases on the university's HPC cluster (A100 GPUs):</p>
         <ul>
           <li>
-            <strong>Baseline:</strong> BM25 (<code>rank_bm25</code>) against three initial dense
-            retrievers via FAISS - MiniLM-L6-v2, BGE-large-en-v1.5, and OpenAI's
-            <code>text-embedding-3-small</code>.
+            <strong>Baselines.</strong> BM25 against three dense retrievers with FAISS: MiniLM,
+            BGE-large and OpenAI's <code>text-embedding-3-small</code>.
           </li>
           <li>
-            <strong>Extended sweep:</strong> five more embedding models, including three
-            7B-parameter Mistral-based models (E5-Mistral-7B, Linq-Embed-Mistral,
-            SFR-Embedding-Mistral) and GTE-large.
+            <strong>Improving retrieval.</strong> More than ten dense models in total (including
+            GTE-large and three 7B models built on Mistral), HyDE query expansion, reciprocal rank
+            fusion, ColBERT late interaction, cross-encoder reranking, and finally a
+            gradient-boosted fusion ranker trained on the task's own queries.
           </li>
           <li>
-            <strong>Beyond plain retrieval:</strong> HyDE query expansion, Reciprocal Rank Fusion
-            hybrid retrieval, and cross-encoder reranking (BGE-reranker-v2-m3), validated with an
-            LLM-as-judge relevance check.
+            <strong>Checking the evaluation.</strong> An independent silver standard: several LLM
+            judges label candidates blind, a human breaks ties, and active learning extends the
+            labels. I also tested the pipeline on a pool of companies production had never ranked.
           </li>
           <li>
-            <strong>Production concerns:</strong> ANN scaling tested up to 2M vectors, plus a full
-            recall error analysis.
+            <strong>Scale.</strong> Exact versus approximate nearest-neighbour search on corpora of
+            up to 397,025 companies, plus an index test with 2 million vectors.
           </li>
         </ul>
 
-        <h2 id="results">Results so far</h2>
+        <h2 id="results">Results</h2>
         <div class="result-grid">
           <div class="result-card">
-            <div class="n">+37–38%</div>
-            <div class="l">NDCG@10 gain over BM25 (BGE & OpenAI, tied)</div>
+            <div class="n">0.823</div>
+            <div class="l">Recall@1000 of the learned fusion ranker (production-based protocol)</div>
           </div>
           <div class="result-card">
-            <div class="n">5.7x</div>
-            <div class="l">Faster: BGE (44.4ms) vs. OpenAI API (254.6ms)</div>
+            <div class="n">27.3%</div>
+            <div class="l">of relevant companies, as judged by the silver standard, not in production's top 1,000</div>
           </div>
           <div class="result-card">
-            <div class="n">0.946</div>
-            <div class="l">NDCG@10, GTE-large - beats three 7B models</div>
+            <div class="n">88.5%</div>
+            <div class="l">of judged-relevant companies recovered on a pool production never ranked (397,025 companies)</div>
           </div>
           <div class="result-card">
-            <div class="n">0.975 → 0.829</div>
-            <div class="l">NDCG@10 drop when HyDE was added (negative result)</div>
+            <div class="n">25–78x</div>
+            <div class="l">faster with approximate search, 0.5 to 2.5% below exact search quality</div>
           </div>
         </div>
         <p>
-          The 5.7x speedup isn't a modeling trick - it's the difference between calling a model that
-          runs on the same machine as the search index versus calling a remote API over the network.
-          Of OpenAI's 254.6ms, 211.7ms is network round-trip; the embedding computation itself is
-          comparably fast. Once you self-host, that round-trip disappears. The result worth
-          reporting isn't "faster," it's that a
-          <strong>free model matches a paid one on quality</strong>
-          at all - the latency gap is just what you get for free on top of that.
+          Under the production-based protocol, every dense model beat BM25 (NDCG@10 0.854). The
+          smallest model, MiniLM, scored highest (0.975), ahead of BGE (0.942) and OpenAI (0.934).
+          My explanation is that the company summaries are short, about 60 words, which is close to
+          the sentence pairs MiniLM was trained on. Self-hosted BGE answered a query in 44 ms, the
+          OpenAI API in 255 ms, and 212 ms of that was the network round trip. GTE-large (0.946)
+          also scored above all three 7B models.
         </p>
 
-        <div class="chart-row">
-          <figure>
-            <img
-              src="../assets/img/thesis/latency_comparison.png"
-              alt="Bar chart comparing query latency between BGE self-hosted and OpenAI API"
-            />
-            <figcaption>
-              OpenAI's latency is dominated by network round-trip (211.7ms), not the model itself.
-            </figcaption>
-          </figure>
-          <figure>
-            <img
-              src="../assets/img/thesis/model_size_vs_quality.png"
-              alt="Bar chart comparing GTE-large against three 7B Mistral-based embedding models"
-            />
-            <figcaption>Fine-tuning strategy mattered more than parameter count here.</figcaption>
-          </figure>
-        </div>
+        <figure>
+          <img
+            src="../assets/img/thesis/model_size_vs_quality.png"
+            alt="Bar chart: GTE-large reaches NDCG@10 0.946, the three 7B Mistral-based models range from 0.631 to 0.938"
+            style="background: #fff; padding: 16px"
+          />
+          <figcaption>GTE-large against three 7B embedding models (NDCG@10, production-based protocol).</figcaption>
+        </figure>
+
+        <p>
+          HyDE query expansion made the first retrieval stage worse: NDCG@10 dropped from 0.975 to
+          0.829. Reranking recovered most of the ranking quality (0.954) but not the lost recall.
+        </p>
 
         <div class="callout">
-          <span class="tag-label">A negative result worth keeping</span>
+          <span class="tag-label">What the silver standard changed</span>
           <p>
-            HyDE query expansion - generating a hypothetical answer and embedding that instead of
-            the raw query - is a popular trick in RAG pipelines. Here it
-            <strong>hurt</strong> retrieval quality (NDCG@10 dropped from 0.975 to 0.829). Not
-            everything that sounds sophisticated helps; this is exactly the kind of result a
-            production team needs before shipping it.
+            Once I retrained the fusion ranker against the independent labels, one of its clearest
+            feature-importance conclusions reversed. The silver standard also showed that
+            production's own top 1,000 misses 409 of the 1,499 companies it judged highly relevant. It
+            did not show that my ranking beats production head to head: the one direct comparison
+            that was possible went the other way, most likely because of bias left in the candidate
+            pool. The thesis reports that result instead of leaving it out.
           </p>
         </div>
 
+        <h2 id="limits">Limitations</h2>
         <p>
-          Reciprocal Rank Fusion of BM25 + MiniLM, on the other hand, matched the MiniLM-only
-          baseline at negligible extra latency (2.2ms) - a much cheaper win than it looks on paper.
+          The silver standard is judged by LLMs with human tie-breaking, not fully checked by
+          humans, so its exact numbers should be read with care. The relevance classifier is only
+          moderately calibrated (Brier score 0.220). The largest corpus I tested is about 2% of the
+          full database, so the speed results show a trend at that scale, not a guarantee for 20
+          million companies.
         </p>
 
-        <h2 id="status">Current status</h2>
-        <p>
-          Chapters 1–4 - project overview, the Istari.ai data, and the full experimental results
-          above - are written and based on real numbers from completed experiments. Chapters 5–10
-          (literature review, extended body chapters, final evaluation, conclusions) are still being
-          drafted. The experiments are done; the narrative write-up is the remaining work. I'll
-          update this page as chapters land.
-        </p>
+        <div class="case-links">
+          <a
+            class="gh-btn magnetic"
+            href="https://github.com/marmeepandya/masters-thesis"
+            target="_blank"
+            rel="noopener"
+            >↗ View code on GitHub</a
+          >
+        </div>
       </div>
     </div>
 
     <div class="wrap">
       <div class="case-nav-footer">
-        <a class="btn ghost" href="ai-fiction.html">← AI Fiction & Ethics</a>
+        <a class="btn ghost" href="ai-fiction.html">← AI Fiction &amp; Ethics</a>
         <a class="btn ghost" href="framing-annotation.html">Next: Framing Annotation →</a>
       </div>
     </div>
@@ -184,7 +180,7 @@
         <div class="reveal">
           <div class="section-tag">Get in touch</div>
           <div class="footer-grid">
-            <h2>If your team has a hard<br />NLP problem, I want in.</h2>
+            <h2>Looking for my first full-time<br />role in NLP, applied AI and data science.</h2>
             <div class="footer-links">
               <a href="mailto:marmeep23@gmail.com">Email</a>
               <a href="https://www.linkedin.com/in/marmee-pandya/" target="_blank" rel="noopener"

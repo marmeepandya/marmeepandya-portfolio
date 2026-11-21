@@ -1,387 +1,408 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Marmee Pandya Portfolio</title>
-    <meta
-      name="description"
-      content="Marmee Pandya Portfolio: MSc Data Science, University of Mannheim. LLM agents, RAG, and applied NLP case studies."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
 
-  <body>
-    <div class="boot" aria-hidden="true">
-      <div class="boot-inner">
-        <div class="boot-line" data-text="$ ssh marmee.dev"></div>
-        <div class="boot-line" data-text="> authenticating... ok"></div>
-        <div class="boot-line" data-text="> loading 7 case studies, 2 in flight"></div>
-        <div class="boot-line" data-text="> rendering embedding space_"></div>
-      </div>
-      <div class="boot-skip">skip →</div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marmee Pandya | NLP, Applied AI and Data Science</title>
+  <meta name="description"
+    content="Marmee Pandya: MSc Data Science, University of Mannheim. NLP, RAG, LLM agents and evaluation, with seven case studies." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="boot" aria-hidden="true">
+    <div class="boot-inner">
+      <div class="boot-line" data-text="$ ssh marmee.dev"></div>
+      <div class="boot-line" data-text="> authenticating... ok"></div>
+      <div class="boot-line" data-text="> loading 7 case studies"></div>
+      <div class="boot-line" data-text="> rendering embedding space_"></div>
     </div>
+    <div class="boot-skip">skip →</div>
+  </div>
 
-    <div class="bg-grid"></div>
-    <div class="grain"></div>
-    <div class="cursor-glow"></div>
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"></div>
+  <div class="bg-grid"></div>
+  <div class="grain"></div>
+  <div class="cursor-glow"></div>
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
 
-    <nav>
-      <div class="nav-inner">
-        <a class="logo" href="#top">marmee_pandya<span>()</span></a>
-        <div class="nav-links">
-          <a href="#about">About</a>
-          <a href="#work">Work</a>
-          <a href="#skills">Skills</a>
-          <a href="#contact">Contact</a>
-        </div>
+  <nav>
+    <div class="nav-inner">
+      <a class="logo" href="#top">marmee_pandya<span>()</span></a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <header class="hero wrap" id="top">
-      <div class="eyebrow">MSc Data Science · University of Mannheim</div>
-      <h1>
-        <span class="line"><span data-scramble>I build things that</span></span>
-        <span class="line"><span class="grad" data-scramble>read, reason,</span></span>
-        <span class="line"><span data-scramble>and retrieve.</span></span>
-      </h1>
-      <p class="sub">
-        I turn messy text, feedback, and unlabeled data into systems that make a defensible call:
-        LLM agents, RAG pipelines, and NLP models validated against real baselines, not just a demo.
-      </p>
-      <div class="cta-row">
-        <a href="#work" class="btn primary magnetic">View case studies →</a>
-        <a href="mailto:marmeep23@gmail.com" class="btn ghost magnetic">Get in touch</a>
-      </div>
-      <div class="scroll-cue">
-        <div class="line-anim"></div>
-        scroll
-      </div>
-    </header>
+  <header class="hero wrap" id="top">
+    <div class="eyebrow">MSc Data Science · University of Mannheim</div>
+    <h1>
+      <span class="line"><span data-scramble>I build NLP systems</span></span>
+      <span class="line"><span class="grad" data-scramble>and test whether</span></span>
+      <span class="line"><span data-scramble>they actually work.</span></span>
+    </h1>
+    <p class="sub">
+      I submitted my Master's thesis in September 2026 and finish my MSc in Data Science in Mannheim in December 2026. I work on retrieval, LLM
+      agents and text classification, and in most of my projects the evaluation took as much work
+      as the model.
+    </p>
+    <div class="cta-row">
+      <a href="#work" class="btn primary magnetic">View case studies →</a>
+      <a href="mailto:marmeep23@gmail.com" class="btn ghost magnetic">Get in touch</a>
+    </div>
+    <div class="scroll-cue">
+      <div class="line-anim"></div>
+      scroll
+    </div>
+  </header>
 
-    <section id="about">
-      <div class="wrap">
-        <div class="about-grid">
-          <div class="about-text reveal">
-            <div class="section-tag">About</div>
-            <p>
-              I'm finishing my
-              <strong>MSc in Data Science at the University of Mannheim</strong>. Most of what I
-              build sits at the intersection of transformer fine-tuning, retrieval, and LLM agents -
-              systems that have to make a defensible call on messy, real-world, mostly-unlabeled
-              text, and then prove it against a real baseline.
-            </p>
-            <p>
-              That's shown up as
-              <strong
-                >fine-tuning EmoBERTa with active learning from 100-200 labeled examples</strong
-              >, a <strong>multi-agent LLM system</strong> that has to justify its recommendations,
-              a
-              <strong>retrieval-augmented pipeline that recovers missing product data</strong>
-              instead of letting an LLM hallucinate it, and an
-              <strong>embedding-model benchmark across 20 million companies</strong>
-              for an industry thesis partner.
-            </p>
-            <p>
-              I track new models and techniques closely, but the real test is always whether a
-              result holds up under a baseline nobody asked me to run - which is why every case
-              study below includes one, plus the negative results I didn't have to report.
-            </p>
-          </div>
-          <div class="stat-grid reveal">
-            <div class="stat">
-              <div class="num" data-count="98.7" data-suffix="%">0.0%</div>
-              <div class="label">Agreement with human-consensus labels, on 600 held-out cases</div>
-            </div>
-            <div class="stat">
-              <div class="num" data-count="5.7" data-suffix="x">0x</div>
-              <div class="label">Faster than OpenAI's API by cutting the network round-trip</div>
-            </div>
-            <div class="stat">
-              <div class="num" data-count="77.1" data-suffix="%">0.0%</div>
-              <div class="label">
-                Attribute-extraction accuracy via retrieval-augmented generation
-              </div>
-            </div>
-            <div class="stat">
-              <div class="num" data-count="0.97" data-suffix="">0.00</div>
-              <div class="label">
-                ROC-AUC flagging high-risk cases, mental-health NLP classifier
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="work">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <div class="section-tag">Selected work</div>
-          <h2>Seven projects, one map</h2>
+  <section id="about">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <div class="section-tag">About</div>
           <p>
-            Fine-tuned NLP classifiers, LLM agents, and retrieval systems. Click a node for the full
-            write-up.
+            I'm in the last semester of my
+            <strong>MSc in Data Science at the University of Mannheim</strong>; my thesis was submitted on 15 September 2026 and I'm waiting for the grade. Since February 2024
+            I've also worked as a working student at Neox Networks, where I built a RAG chatbot and
+            search system that the sales team uses for customer questions.
+          </p>
+          <p>
+            My university projects are mostly about text: a
+            <strong>retrieval pipeline that fills in missing product data</strong>,
+            <strong>LLM annotation of German news</strong> checked against human coders, a
+            <strong>coping-strategy classifier</strong> trained with active learning from 100 to
+            200 labels, and a <strong>multi-agent shopping assistant</strong>. My Master's thesis,
+            with the industry partner Istari.ai, looked at <strong>semantic company search</strong>
+            and at how to evaluate it when the only labels come from the production system.
+          </p>
+          <p>
+            Something I've learned along the way is that the first evaluation setup is often wrong:
+            an abstention rule tuned for one model, an accuracy number inflated by class imbalance,
+            a benchmark that scores against the system you're trying to beat. The case studies
+            below include those problems and the results that didn't work out.
           </p>
         </div>
-
-        <div class="constellation-wrap">
-          <div class="constellation" id="constellation"></div>
-
-          <div class="constellation-fallback">
-            <a class="cf-row" href="projects/shopping-assistant.html">
-              <div class="cf-left">
-                <span class="cf-idx">01</span>
-                <div>
-                  <h4>Shopping Assistant</h4>
-                  <div class="hook">
-                    Built a multi-agent LangGraph pipeline that parses free-text queries, retrieves
-                    live product data, and reasons over specs and reviews with an LLM - beating a
-                    keyword-search baseline by 79% on ranking precision.
-                  </div>
-                </div>
-              </div>
-              <span class="go">View →</span>
-            </a>
-            <a class="cf-row" href="projects/rag-cleaning.html">
-              <div class="cf-left">
-                <span class="cf-idx">02</span>
-                <div>
-                  <h4>RAG Data Cleaning</h4>
-                  <div class="hook">
-                    Built a retrieval-augmented pipeline (dense retrieval + cross-encoder reranking
-                    + few-shot LLM extraction) to recover product attributes that don't exist in
-                    free text - lifting extraction accuracy from 15.6% to 77.1%.
-                  </div>
-                </div>
-              </div>
-              <span class="go">View →</span>
-            </a>
-            <a class="cf-row" href="projects/emotion-regulation.html">
-              <div class="cf-left">
-                <span class="cf-idx">03</span>
-                <div>
-                  <h4>Emotion Regulation ML</h4>
-                  <div class="hook">
-                    Fine-tuned EmoBERTa with active learning to classify coping strategies from just
-                    100-200 labeled examples out of 28,000+ - the final model missed zero high-risk
-                    cases on the held-out test set (ROC-AUC 0.97).
-                  </div>
-                </div>
-              </div>
-              <span class="go">View →</span>
-            </a>
-            <a class="cf-row" href="projects/wiki-trends.html">
-              <div class="cf-left">
-                <span class="cf-idx">04</span>
-                <div>
-                  <h4>Wiki Edit Wars</h4>
-                  <div class="hook">
-                    Engineered 7 linguistic features (hedging, affective stance, attribution bias)
-                    to test whether Wikipedia articles show measurable warning signs before becoming
-                    contested - a bilingual, matched-pairs study at AUC 0.79.
-                  </div>
-                </div>
-              </div>
-              <span class="go">View →</span>
-            </a>
-            <a class="cf-row" href="projects/ai-fiction.html">
-              <div class="cf-left">
-                <span class="cf-idx">05</span>
-                <div>
-                  <h4>AI Fiction & Ethics</h4>
-                  <div class="hook">
-                    A close reading of a 1977 novel about an uncontainable AI, used to argue that
-                    today's AI-alignment failures are a structural mismatch between capability
-                    growth and governance - not a hypothetical.
-                  </div>
-                </div>
-              </div>
-              <span class="go">View →</span>
-            </a>
-            <a class="cf-row" href="projects/thesis.html">
-              <div class="cf-left">
-                <span class="cf-idx">06</span>
-                <div>
-                  <h4>
-                    Master's Thesis
-                    <span class="in-progress-tag">· in progress</span>
-                  </h4>
-                  <div class="hook">
-                    Benchmarked 8 embedding models and BM25 for semantic search over a 20M-company
-                    index - a free, self-hosted model matched OpenAI's API on retrieval quality,
-                    then beat it on speed simply by removing the network round-trip.
-                  </div>
-                </div>
-              </div>
-              <span class="go">View →</span>
-            </a>
-            <a class="cf-row" href="projects/framing-annotation.html">
-              <div class="cf-left">
-                <span class="cf-idx">07</span>
-                <div>
-                  <h4>Framing Annotation</h4>
-                  <div class="hook">
-                    Iteratively refined LLM prompting (zero-shot → few-shot → chain-of-thought) to
-                    annotate crime framing across 660K German news paragraphs, reaching 98.7%
-                    agreement with the human-consensus label on a 600-paragraph held-out sample
-                    (only 8 disagreements).
-                  </div>
-                </div>
-              </div>
-              <span class="go">View →</span>
-            </a>
+        <div class="stat-grid reveal">
+          <div class="stat">
+            <div class="num" data-count="0.839" data-suffix="">0.000</div>
+            <div class="label">Cohen's κ, LLM vs. human coders on 600 held-out news paragraphs</div>
           </div>
-        </div>
-
-        <div class="other-builds reveal">
-          <div class="ob-label">Also built</div>
-          <div class="ob-grid">
-            <div class="ob-card">
-              <h4>RAG System - HerHackathon 2025 (Beiersdorf)</h4>
-              <p>
-                A Mistral-based modular RAG pipeline linking live social-media trends to
-                Beiersdorf's internal scientific knowledge base (papers, patents, ingredient DBs),
-                with multimodal output and n8n workflow automation for publishing.
-              </p>
-              <div class="ob-meta">Nov 2025 · Hackathon</div>
-            </div>
-            <div class="ob-card">
-              <h4>Electricity Price Forecasting</h4>
-              <p>
-                Forecasted electricity prices for Victoria, Australia using Linear Regression,
-                Random Forest, and Gradient Boosting Regressors on historical market data.
-              </p>
-              <div class="ob-meta">Feb – Jun 2024 · Coursework</div>
-            </div>
+          <div class="stat">
+            <div class="num" data-count="72.9" data-suffix="%">0.0%</div>
+            <div class="label">Accuracy filling in missing product attributes, fully local setup (15.6% without retrieval)</div>
+          </div>
+          <div class="stat">
+            <div class="num" data-count="27.3" data-suffix="%">0.0%</div>
+            <div class="label">of relevant companies (judged by an independent LLM panel) not in production's top 1,000</div>
+          </div>
+          <div class="stat">
+            <div class="num" data-count="0.97" data-suffix="">0.00</div>
+            <div class="label">ROC-AUC of a maladaptive-coping detector, on a small test set of 50 entries</div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="skills">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <div class="section-tag">Toolbox</div>
-          <h2>What I actually reach for</h2>
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-tag">Selected work</div>
+        <h2>Seven projects</h2>
+        <p>Retrieval, LLM agents and text classification. Click a project for the full write-up.</p>
+      </div>
+
+      <div class="constellation-wrap">
+        <div class="constellation" id="constellation"></div>
+
+        <div class="constellation-fallback">
+          <a class="cf-row" href="projects/shopping-assistant.html">
+            <div class="cf-left">
+              <span class="cf-idx">01</span>
+              <div>
+                <h4>Shopping Assistant</h4>
+                <div class="hook">
+                  A LangGraph pipeline that turns a request like "quiet stand mixer under $150" into three ranked products with reasons. Precision@10 of 0.565 against 0.315 for keyword search, on 20 annotated queries.
+                </div>
+              </div>
+            </div>
+            <span class="go">View →</span>
+          </a>
+          <a class="cf-row" href="projects/rag-cleaning.html">
+            <div class="cf-left">
+              <span class="cf-idx">02</span>
+              <div>
+                <h4>RAG Data Cleaning</h4>
+                <div class="hook">
+                  Fills in missing product attributes by retrieving the same product from other shops, reranking, and extracting with an LLM. Accuracy rose from 15.6% to 72.9% with a fully local setup.
+                </div>
+              </div>
+            </div>
+            <span class="go">View →</span>
+          </a>
+          <a class="cf-row" href="projects/emotion-regulation.html">
+            <div class="cf-left">
+              <span class="cf-idx">03</span>
+              <div>
+                <h4>Emotion Regulation ML</h4>
+                <div class="hook">
+                  Active learning on EmoBERTa to classify coping strategies in grief journals, starting from 100 to 200 labels. The maladaptive detector reached ROC-AUC 0.97 on a small test set.
+                </div>
+              </div>
+            </div>
+            <span class="go">View →</span>
+          </a>
+          <a class="cf-row" href="projects/wiki-trends.html">
+            <div class="cf-left">
+              <span class="cf-idx">04</span>
+              <div>
+                <h4>Wiki Edit Wars</h4>
+                <div class="hook">
+                  Do contested Wikipedia articles read differently? A matched-pairs study of 285 English and German article pairs, with a full model at ROC-AUC 0.79.
+                </div>
+              </div>
+            </div>
+            <span class="go">View →</span>
+          </a>
+          <a class="cf-row" href="projects/ai-fiction.html">
+            <div class="cf-left">
+              <span class="cf-idx">05</span>
+              <div>
+                <h4>AI Fiction &amp; Ethics</h4>
+                <div class="hook">
+                  A seminar paper reading a 1977 novel about an uncontainable program as a story about capability growing faster than governance.
+                </div>
+              </div>
+            </div>
+            <span class="go">View →</span>
+          </a>
+          <a class="cf-row" href="projects/thesis.html">
+            <div class="cf-left">
+              <span class="cf-idx">06</span>
+              <div>
+                <h4>Master's Thesis</h4>
+                <div class="hook">
+                  Semantic company search for Istari.ai, and an independent relevance standard that suggested production's top 1,000 misses about a quarter of the relevant companies.
+                </div>
+              </div>
+            </div>
+            <span class="go">View →</span>
+          </a>
+          <a class="cf-row" href="projects/framing-annotation.html">
+            <div class="cf-left">
+              <span class="cf-idx">07</span>
+              <div>
+                <h4>Framing Annotation</h4>
+                <div class="hook">
+                  LLM coding of crime framing in 660K German news paragraphs, refined over several rounds and validated against human coders at κ = 0.839.
+                </div>
+              </div>
+            </div>
+            <span class="go">View →</span>
+          </a>
         </div>
-        <div class="skills-groups reveal">
-          <div class="skills-group">
-            <div class="skills-group-label">NLP &amp; LLMs</div>
-            <div class="skills-cloud">
-              <span class="skill-pill">HuggingFace Transformers</span>
-              <span class="skill-pill">BERT / EmoBERTa / GBERT</span>
-              <span class="skill-pill">spaCy</span>
-              <span class="skill-pill">NLTK</span>
-              <span class="skill-pill">Active Learning</span>
-              <span class="skill-pill">Prompt Engineering</span>
-              <span class="skill-pill">LLaMA / Mistral / Ministral</span>
-              <span class="skill-pill">Ollama</span>
-            </div>
+      </div>
+
+      <div class="other-builds reveal">
+        <div class="ob-label">Work experience</div>
+        <div class="ob-grid">
+          <div class="ob-card">
+            <h4>RAG chatbot and semantic search, Neox Networks</h4>
+            <p>
+              Internal chatbot and search over product and document data: document ingestion,
+              custom bge-m3 embeddings, Meilisearch retrieval and self-hosted LLMs via Ollama. The
+              sales team uses it to answer customer questions.
+            </p>
+            <div class="ob-meta">Feb 2024 – present · Working student</div>
           </div>
-          <div class="skills-group">
-            <div class="skills-group-label">Retrieval &amp; RAG</div>
-            <div class="skills-cloud">
-              <span class="skill-pill">LangGraph / LangChain</span>
-              <span class="skill-pill">FAISS</span>
-              <span class="skill-pill">BM25</span>
-              <span class="skill-pill">sentence-transformers</span>
-              <span class="skill-pill">CrossEncoder Reranking</span>
-              <span class="skill-pill">Meilisearch</span>
-              <span class="skill-pill">PyDI</span>
-            </div>
-          </div>
-          <div class="skills-group">
-            <div class="skills-group-label">Machine Learning</div>
-            <div class="skills-cloud">
-              <span class="skill-pill">PyTorch</span>
-              <span class="skill-pill">scikit-learn</span>
-              <span class="skill-pill">XGBoost</span>
-              <span class="skill-pill">imbalanced-learn</span>
-              <span class="skill-pill">scikit-multilearn</span>
-              <span class="skill-pill">Model Calibration</span>
-            </div>
-          </div>
-          <div class="skills-group">
-            <div class="skills-group-label">Statistics &amp; Evaluation</div>
-            <div class="skills-cloud">
-              <span class="skill-pill">statsmodels</span>
-              <span class="skill-pill">scipy.stats</span>
-              <span class="skill-pill">Wilcoxon / Holm Correction</span>
-              <span class="skill-pill">Bootstrap CI</span>
-              <span class="skill-pill">Krippendorff's Alpha</span>
-              <span class="skill-pill">Cohen's Kappa</span>
-            </div>
-          </div>
-          <div class="skills-group">
-            <div class="skills-group-label">Data &amp; Infrastructure</div>
-            <div class="skills-cloud">
-              <span class="skill-pill">Python</span>
-              <span class="skill-pill">SQL</span>
-              <span class="skill-pill">MySQL</span>
-              <span class="skill-pill">ClickHouse</span>
-              <span class="skill-pill">Docker</span>
-              <span class="skill-pill">Streamlit</span>
-              <span class="skill-pill">HPC / SLURM (A100 clusters)</span>
-            </div>
-          </div>
-          <div class="skills-group">
-            <div class="skills-group-label">Tools &amp; APIs</div>
-            <div class="skills-cloud">
-              <span class="skill-pill">Git / GitHub</span>
-              <span class="skill-pill">SERPAPI / Tavily</span>
-              <span class="skill-pill">Wikipedia API</span>
-              <span class="skill-pill">n8n</span>
-            </div>
+          <div class="ob-card">
+            <h4>Central database and data pipelines, Neox Networks</h4>
+            <p>
+              Designed and built an internal database and web application (LAMP stack, MySQL) that
+              replaced a manual Excel process, and an ingestion pipeline that loads Suricata
+              network-security logs into ClickHouse. I also run the Ubuntu server behind these tools
+              (Docker, HTTPS, REST APIs).
+            </p>
+            <div class="ob-meta">Feb 2024 – present · Working student</div>
           </div>
         </div>
       </div>
-    </section>
 
-    <footer id="contact">
-      <div class="wrap">
-        <div class="reveal">
-          <div class="section-tag">Get in touch</div>
-          <div class="footer-grid">
-            <h2>If your team has a hard<br />NLP problem, I want in.</h2>
-            <div class="footer-links">
-              <a href="mailto:marmeep23@gmail.com">Email</a>
-              <a href="https://www.linkedin.com/in/marmee-pandya/" target="_blank" rel="noopener"
-                >LinkedIn</a
-              >
-              <a href="https://github.com/marmeepandya/" target="_blank" rel="noopener">GitHub</a>
-            </div>
+      <div class="other-builds reveal">
+        <div class="ob-label">Also built</div>
+        <div class="ob-grid">
+          <div class="ob-card">
+            <h4>RAG system, HerHackathon 2025 (Beiersdorf)</h4>
+            <p>
+              A RAG pipeline built on Mistral that links social-media trends to Beiersdorf's
+              scientific knowledge base (papers, patents, ingredient databases), with n8n workflows
+              that automate publishing.
+            </p>
+            <div class="ob-meta">Nov 2025 · Hackathon</div>
           </div>
-          <div class="footer-bottom">
-            <span>Marmee Pandya</span>
+          <div class="ob-card">
+            <h4>Electricity Price Forecasting</h4>
+            <p>
+              Forecasted electricity prices for Victoria, Australia using Linear Regression,
+              Random Forest, and Gradient Boosting Regressors on historical market data.
+            </p>
+            <div class="ob-meta">Feb – Jun 2024 · Coursework</div>
           </div>
         </div>
       </div>
-    </footer>
+    </div>
+  </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="script.js"></script>
-    <script>
-      setTimeout(function () {
-        if (typeof gsap === "undefined") {
-          document.querySelectorAll(".reveal").forEach(function (el) {
-            el.style.opacity = 1;
-            el.style.transform = "none";
-          });
-          document.querySelectorAll(".boot").forEach(function (el) {
-            el.remove();
-          });
-        }
-      }, 2500);
-    </script>
-  </body>
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-tag">Toolbox</div>
+        <h2>Tools I use</h2>
+      </div>
+      <div class="skills-groups reveal">
+        <div class="skills-group">
+          <div class="skills-group-label">NLP &amp; LLMs</div>
+          <div class="skills-cloud">
+            <span class="skill-pill">HuggingFace Transformers</span>
+            <span class="skill-pill">BERT / EmoBERTa / GBERT</span>
+            <span class="skill-pill">Prompt engineering (zero-/few-shot, CoT)</span>
+            <span class="skill-pill">LLM-as-a-judge</span>
+            <span class="skill-pill">Active learning</span>
+            <span class="skill-pill">OpenAI API</span>
+            <span class="skill-pill">LLaMA / Mistral / Ministral</span>
+            <span class="skill-pill">Ollama</span>
+            <span class="skill-pill">spaCy</span>
+            <span class="skill-pill">NLTK</span>
+          </div>
+        </div>
+        <div class="skills-group">
+          <div class="skills-group-label">Retrieval &amp; RAG</div>
+          <div class="skills-cloud">
+            <span class="skill-pill">LangGraph / LangChain</span>
+            <span class="skill-pill">sentence-transformers</span>
+            <span class="skill-pill">FAISS (HNSW, IVF)</span>
+            <span class="skill-pill">BM25</span>
+            <span class="skill-pill">ColBERT</span>
+            <span class="skill-pill">Hybrid search (RRF)</span>
+            <span class="skill-pill">HyDE</span>
+            <span class="skill-pill">CrossEncoder reranking</span>
+            <span class="skill-pill">Meilisearch</span>
+            <span class="skill-pill">PyDI</span>
+          </div>
+        </div>
+        <div class="skills-group">
+          <div class="skills-group-label">Machine Learning</div>
+          <div class="skills-cloud">
+            <span class="skill-pill">PyTorch</span>
+            <span class="skill-pill">scikit-learn</span>
+            <span class="skill-pill">XGBoost</span>
+            <span class="skill-pill">Learning to rank (gradient boosting)</span>
+            <span class="skill-pill">imbalanced-learn</span>
+            <span class="skill-pill">Focal loss / class weighting</span>
+            <span class="skill-pill">Model calibration</span>
+            <span class="skill-pill">scikit-multilearn</span>
+          </div>
+        </div>
+        <div class="skills-group">
+          <div class="skills-group-label">Statistics &amp; Evaluation</div>
+          <div class="skills-cloud">
+            <span class="skill-pill">statsmodels</span>
+            <span class="skill-pill">scipy.stats</span>
+            <span class="skill-pill">Wilcoxon / Holm correction</span>
+            <span class="skill-pill">Bootstrap CI</span>
+            <span class="skill-pill">Permutation tests</span>
+            <span class="skill-pill">Matched-pairs design</span>
+            <span class="skill-pill">Cohen's Kappa</span>
+            <span class="skill-pill">Krippendorff's Alpha</span>
+          </div>
+        </div>
+        <div class="skills-group">
+          <div class="skills-group-label">Data &amp; Infrastructure</div>
+          <div class="skills-cloud">
+            <span class="skill-pill">Python</span>
+            <span class="skill-pill">SQL</span>
+            <span class="skill-pill">Pandas / NumPy</span>
+            <span class="skill-pill">Matplotlib / Seaborn</span>
+            <span class="skill-pill">MySQL</span>
+            <span class="skill-pill">ClickHouse</span>
+            <span class="skill-pill">Docker</span>
+            <span class="skill-pill">Linux server administration</span>
+            <span class="skill-pill">LAMP stack</span>
+            <span class="skill-pill">Streamlit</span>
+            <span class="skill-pill">HPC / SLURM (A100)</span>
+          </div>
+        </div>
+        <div class="skills-group">
+          <div class="skills-group-label">Tools &amp; APIs</div>
+          <div class="skills-cloud">
+            <span class="skill-pill">Git / GitHub / GitLab</span>
+            <span class="skill-pill">Jupyter</span>
+            <span class="skill-pill">LaTeX</span>
+            <span class="skill-pill">SerpAPI / Tavily</span>
+            <span class="skill-pill">Wikipedia API / Lift Wing</span>
+            <span class="skill-pill">n8n</span>
+            <span class="skill-pill">Claude Code</span>
+          </div>
+        </div>
+        <div class="skills-group">
+          <div class="skills-group-label">Other languages</div>
+          <div class="skills-cloud">
+            <span class="skill-pill">Java</span>
+            <span class="skill-pill">C#</span>
+            <span class="skill-pill">PHP</span>
+            <span class="skill-pill">R</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="section-tag">Get in touch</div>
+        <div class="footer-grid">
+          <h2>Looking for my first full-time<br />role in NLP, applied AI and data science.</h2>
+          <div class="footer-links">
+            <a href="mailto:marmeep23@gmail.com">Email</a>
+            <a href="https://www.linkedin.com/in/marmee-pandya/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/marmeepandya/" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>Marmee Pandya</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+    setTimeout(function () {
+      if (typeof gsap === "undefined") {
+        document.querySelectorAll(".reveal").forEach(function (el) {
+          el.style.opacity = 1;
+          el.style.transform = "none";
+        });
+        document.querySelectorAll(".boot").forEach(function (el) {
+          el.remove();
+        });
+      }
+    }, 2500);
+  </script>
+</body>
+
 </html>

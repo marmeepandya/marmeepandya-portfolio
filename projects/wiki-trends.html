@@ -35,9 +35,8 @@
       </div>
       <h1>Contested vs. stable Wikipedia articles: a multilingual computational analysis</h1>
       <p class="hook">
-        Do edit wars leave a trace in the text - before anyone flags them? A matched-pairs study
-        across English and German Wikipedia asking whether contested articles simply
-        <em>read</em> differently from stable ones, using nothing but linguistic features.
+        Do articles in an editorial dispute read differently from stable ones? We compared matched
+        pairs of English and German Wikipedia articles using only linguistic features of the text.
       </p>
     </header>
 
@@ -53,52 +52,38 @@
 
     <div class="wrap case-body">
       <nav class="case-toc">
-        <a href="#problem">Problem</a>
+        <a href="#problem">Question</a>
         <a href="#approach">Approach</a>
         <a href="#results">Results</a>
-        <a href="#standout">Why it's different</a>
+        <a href="#limits">Limitations</a>
       </nav>
 
       <div class="case-content">
         <h2 id="problem">The research question</h2>
         <p>
-          <strong
-            >Can linguistic and structural features of Wikipedia articles predict whether an article
-            is editorially contested - and do these patterns differ between English and
-            German?</strong
-          >
-          We compared <strong>contested</strong> articles (carrying an active <code>{{POV}}</code> /
-          <code>{{Disputed}}</code> / <code>Vorlage:Neutralität</code> template) against
-          <strong>stable</strong> Featured/Excellent articles, matched on topic, word count, article
-          age, and lexical diversity - so any signal we found couldn't just be explained by
-          "contested articles are about messier topics."
+          <strong>Can linguistic features of a Wikipedia article tell whether it is editorially
+          contested, and do the patterns differ between English and German?</strong>
+          Contested articles carry an active <code>{{POV}}</code>, <code>{{Disputed}}</code> or
+          <code>Vorlage:Neutralität</code> template. We compared them with stable Featured
+          (English) and Excellent (German) articles on the same topic, matched on word count and
+          article age, so that differences in topic, length or age could not explain what we found.
         </p>
 
         <h2 id="approach">The approach</h2>
         <p>
-          I designed and built the entire bilingual data-collection pipeline myself: Wikipedia API
-          querying, wikitext cleaning, revision-history scanning, and topic classification via
-          Wikimedia's Lift Wing outlink model. On top of that, the team engineered
-          <strong>7 linguistic features across 3 theoretical layers</strong>:
+          I built the bilingual data pipeline: querying the Wikipedia API, cleaning wikitext,
+          scanning revision histories, and classifying topics with Wikimedia's Lift Wing outlink
+          model. I also implemented the same-topic nearest-neighbour matching and ran a pilot of six
+          experiments that shaped the final design. The final datasets have 143 English pairs
+          (from 200 contested and 400 stable candidates) and 142 German pairs (from 195 contested
+          candidates), all with a standardised mean difference below 0.1 on word count and age.
         </p>
+        <p>As a team we measured seven features in three groups:</p>
         <ul>
-          <li>
-            <strong>Framing:</strong> epistemic hedges (F1), affective stance language (F2),
-            verification-evading phrasing (F3).
-          </li>
-          <li><strong>Attribution:</strong> attribution bias (F4), lexical presupposition (F5).</li>
-          <li>
-            <strong>Discourse:</strong> contrastive transitions (F6), lexical diversity / MTLD (F7).
-          </li>
+          <li><strong>Framing:</strong> epistemic hedges (F1), affective stance (F2), verification-evading phrases (F3).</li>
+          <li><strong>Attribution:</strong> attribution verb bias (F4), lexical presupposition (F5).</li>
+          <li><strong>Discourse:</strong> contrastive transitions (F6), lexical diversity, MTLD (F7).</li>
         </ul>
-        <p>
-          I implemented and validated the same-topic nearest-neighbour matching algorithm myself,
-          ran a six-experiment pilot study that shaped the final methodology, and collected the
-          final datasets:
-          <strong>143 matched English pairs</strong> (from 200 contested / 400 stable candidates)
-          and <strong>142 matched German pairs</strong> (from 195 contested candidates). All matches
-          passed a strict covariate-balance check (SMD &lt; 0.1 on word count and article age).
-        </p>
 
         <figure>
           <img
@@ -106,17 +91,13 @@
             alt="Six-stage evaluation pipeline: data collection, matching, feature extraction, statistical testing, modelling, robustness checks"
             style="background: #fff; padding: 24px"
           />
-          <figcaption>
-            The six-stage pipeline, from raw Wikipedia API pulls to the final cross-lingual
-            robustness check.
-          </figcaption>
+          <figcaption>The pipeline, from Wikipedia API pulls to the cross-lingual robustness check.</figcaption>
         </figure>
 
         <p>
-          Feature significance was tested with Wilcoxon signed-rank tests plus Holm correction for
-          multiple comparisons; the classifier was a bootstrap-CI logistic regression, validated
-          under 5-fold cross-validation and a separate robustness re-run with alternate feature
-          definitions.
+          We tested each feature with paired Wilcoxon signed-rank tests and Holm correction, and
+          trained a logistic regression evaluated with 5-fold cross-validation and bootstrap
+          confidence intervals.
         </p>
 
         <div class="chart-row">
@@ -125,47 +106,48 @@
               src="../assets/img/wiki-trends/effect_sizes_significance.png"
               alt="Bar chart of effect sizes (rank-biserial correlation) per linguistic feature with significance stars"
             />
-            <figcaption>
-              Effect sizes by feature - verification-evading language (F3) and attribution bias (F4)
-              dominate.
-            </figcaption>
+            <figcaption>Effect size per feature. Verification-evading phrases (F3) and attribution bias (F4) are the largest.</figcaption>
           </figure>
           <figure>
             <img
               src="../assets/img/wiki-trends/matching_balance.png"
               alt="Covariate balance chart showing standardized mean difference for word count and article age, both under the 0.1 threshold"
             />
-            <figcaption>
-              Covariate balance after matching, EN and DE - both well under the 0.1 SMD threshold.
-            </figcaption>
+            <figcaption>Covariate balance after matching, English and German, both under the 0.1 threshold.</figcaption>
           </figure>
         </div>
 
-        <h2 id="results">The results</h2>
+        <h2 id="results">Results</h2>
         <div class="result-grid">
           <div class="result-card">
-            <div class="n">5/7</div>
-            <div class="l">Features significant after Holm correction</div>
+            <div class="n">5 / 7</div>
+            <div class="l">English features significant after Holm correction</div>
           </div>
           <div class="result-card">
             <div class="n">0.790</div>
-            <div class="l">ROC-AUC, full 7-feature model (±0.071, 5-fold CV)</div>
-          </div>
-          <div class="result-card">
-            <div class="n">0.748</div>
-            <div class="l">Accuracy, full model (vs. 0.50 baseline)</div>
+            <div class="l">ROC-AUC of the full model (±0.071, 5-fold CV)</div>
           </div>
           <div class="result-card">
             <div class="n">0.740</div>
-            <div class="l">Macro-F1, full model</div>
+            <div class="l">Macro-F1 of the full model</div>
+          </div>
+          <div class="result-card">
+            <div class="n">0.584 → 0.624</div>
+            <div class="l">German macro-F1 after adapting the features to German</div>
           </div>
         </div>
         <p>
-          Contested articles carry measurably more hedging, affective stance, and attribution-bias
-          language - and consistently fewer reverts don't explain it away, since the matching
-          controlled for that. The German sub-analysis (142 pairs) told a related but weaker story:
-          macro-F1 improved from 0.584 to 0.624 once we adapted features for German syntax, with
-          attribution bias (F4) standing out as the most cross-lingually robust signal of the seven.
+          The strongest signals were about sources: contested articles use more
+          verification-evading phrases and more loaded attribution verbs. They also contain more
+          affective stance markers. Hedging was not significant, and if anything slightly lower in
+          contested articles, so editors in a dispute seem to assert rather than hedge. In German
+          the signal was weaker, and attribution bias was the feature that held up best across
+          both languages.
+        </p>
+        <p>
+          In a robustness check we re-ran the model with an alternative feature definition and a
+          filtered subsample, and the direction and relative size of the coefficients stayed
+          the same.
         </p>
 
         <figure>
@@ -173,30 +155,16 @@
             src="../assets/img/wiki-trends/descriptive_stats_en_de.png"
             alt="Four bar charts comparing contested vs stable articles on unique editors, citations, sections, and reverts, for English and German"
           />
-          <figcaption>
-            Contested articles draw more editors, more reverts, and more section churn - in both
-            languages.
-          </figcaption>
+          <figcaption>Contested articles have more editors, more reverts and more section changes in both languages.</figcaption>
         </figure>
 
-        <h2 id="standout">Why it's different</h2>
+        <h2 id="limits">Limitations</h2>
         <p>
-          This reads more like a research paper than a class exercise: a genuine matched-pairs
-          causal design, Holm-corrected significance testing, and a cross-lingual comparison most
-          student projects skip because it doubles the scraping and modeling work. My specific
-          contribution was the full data pipeline and matching algorithm, the six-experiment pilot
-          that shaped the final design, and the proposal - discussed in the paper's conclusion -
-          that this kind of contestation signal could double as an LLM pretraining-data filter.
+          This is an observational comparison. Matching removes the effect of topic, length and age,
+          but it does not show that the language causes a dispute or the other way round. The
+          samples are also modest, about 140 pairs per language. In the paper we suggest that a
+          signal like this could help filter LLM pretraining data, which we did not test.
         </p>
-        <div class="callout">
-          <span class="tag-label">A methods choice worth mentioning</span>
-          <p>
-            In the robustness check (above), we re-ran the full model on an alternate feature
-            definition and a filtered subsample (k=3.0) - the coefficient directions and relative
-            magnitudes barely moved. That's the kind of boring, unglamorous check that's easy to
-            skip and exactly why the result is trustworthy.
-          </p>
-        </div>
       </div>
     </div>
 
@@ -212,7 +180,7 @@
       </div>
       <div class="case-nav-footer">
         <a class="btn ghost" href="emotion-regulation.html">← Emotion Regulation ML</a>
-        <a class="btn ghost" href="ai-fiction.html">Next: AI Fiction & Ethics →</a>
+        <a class="btn ghost" href="ai-fiction.html">Next: AI Fiction &amp; Ethics →</a>
       </div>
     </div>
 
@@ -221,7 +189,7 @@
         <div class="reveal">
           <div class="section-tag">Get in touch</div>
           <div class="footer-grid">
-            <h2>If your team has a hard<br />NLP problem, I want in.</h2>
+            <h2>Looking for my first full-time<br />role in NLP, applied AI and data science.</h2>
             <div class="footer-links">
               <a href="mailto:marmeep23@gmail.com">Email</a>
               <a href="https://www.linkedin.com/in/marmee-pandya/" target="_blank" rel="noopener"

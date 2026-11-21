@@ -31,18 +31,17 @@
     <header class="case-hero wrap">
       <a class="back" href="../index.html#work">← Back to all work</a>
       <div class="case-meta">
-        <span class="meta-pill">Computational Analysis of Communication · Semester 6</span>
-        <span class="meta-pill">Team of 2 · German NLP</span>
+        <span class="meta-pill">Computational Analysis of Communication</span>
+        <span class="meta-pill">German NLP</span>
       </div>
       <h1>
         Developing and validating annotation guidelines for group-related crime frames in German
         news
       </h1>
       <p class="hook">
-        660K German news paragraphs mention ethnic and social groups, masked during coding to reduce
-        bias. The question: can an LLM, guided by iteratively refined instructions, code crime
-        framing as reliably as a trained human annotator? Final answer, on a 600-paragraph held-out
-        sample: 98.7% agreement, κ = 0.839.
+        Can an LLM, guided by written coding instructions that we refined step by step, code crime
+        framing in German news as reliably as trained human coders? On a held-out random sample of
+        600 paragraphs, it reached Cohen's κ = 0.839 against the human consensus label.
       </p>
     </header>
 
@@ -58,99 +57,94 @@
 
     <div class="wrap case-body">
       <nav class="case-toc">
-        <a href="#problem">Problem</a>
+        <a href="#problem">Question</a>
         <a href="#approach">Approach</a>
         <a href="#results">Results</a>
-        <a href="#standout">Why it's different</a>
+        <a href="#limits">Limitations</a>
       </nav>
 
       <div class="case-content">
         <h2 id="problem">The research question</h2>
         <p>
-          Working with Robin-Kiara Braun under Prof. Rainer Freudenthaler, we set out to answer:
-          <strong
-            >can large language models, guided by iteratively refined natural-language annotation
-            instructions, reliably and validly identify group-related crime framing in German news
-            coverage, and how does their performance compare with human annotators?</strong
-          >
+          <strong>Can large language models, guided by refined natural-language annotation
+          instructions, reliably identify group-related crime framing in German news, and how do
+          they compare with human coders?</strong>
         </p>
         <p>
-          The corpus:
-          <strong>659,895 German-language news paragraphs</strong> from 60 outlets published in
-          2022, covering 78 nationality/ethnic/religious groups - masked as
-          <code>[Gruppe 1]</code> / <code>[Andere Gruppe]</code> during annotation to reduce coder
-          bias. Outlets span mainstream national (50.6% of paragraphs), regional (39.4%), and
-          alternative-right/left fringe media (10% combined). The top-mentioned groups: refugees
-          (117,132 paragraphs), Ukrainians (72,028), Russians (70,398).
+          The corpus has 659,895 paragraphs from 60 German outlets published in 2022 that mention
+          one of 78 national, ethnic or religious groups. During coding, the group was masked as
+          <code>[Gruppe 1]</code> or <code>[Andere Gruppe]</code> to reduce coder bias. About half
+          of the paragraphs come from national mainstream media (50.6%), 39.4% from regional media,
+          and 10% from fringe outlets. The most mentioned groups are refugees (117,132 paragraphs),
+          Ukrainians (72,028) and Russians (70,398).
         </p>
 
         <h2 id="approach">The approach</h2>
-        <p>
-          We reimplemented Freudenthaler's "bacchuss" annotation-validation routine in Python as a
-          four-stage pipeline:
-        </p>
+        <p>We implemented the seminar's annotation-validation routine in Python, in four stages:</p>
         <ul>
           <li>
-            <strong>Draft instruction</strong> - write the initial natural-language coding rule for
-            <code>NO_CRIME_FRAME</code> vs. <code>CRIME_FRAME_NEG</code> (a third class, positive
-            crime framing, was dropped - only 1 case appeared in development data).
+            <strong>Draft instruction.</strong> A written coding rule for
+            <code>NO_CRIME_FRAME</code> vs. <code>CRIME_FRAME_NEG</code>. A third label, positive
+            crime framing, appeared only once in the development data, so we left it out of the
+            evaluation.
           </li>
           <li>
-            <strong>Coverage / hard-case testing</strong> - 10-repeat LLM runs at temperature 0.7 to
-            surface ambiguous cases the instructions didn't yet handle.
+            <strong>Hard cases.</strong> Ten repeated LLM runs at temperature 0.7 to find paragraphs
+            where the instruction was still ambiguous.
           </li>
           <li>
-            <strong>Validation</strong> - tested on a curated 500-paragraph sample, comparing
-            zero-shot, few-shot, and few-shot+chain-of-thought prompting, plus side-experiments on
-            multi-model ensembling and confidence-based routing.
+            <strong>Validation.</strong> Zero-shot, few-shot and few-shot with chain-of-thought on
+            development samples, plus side experiments with model ensembles and confidence-based
+            routing.
           </li>
           <li>
-            <strong>Final validation</strong> - a fresh, independent, fully random 600-paragraph
-            sample, held out from all instruction development.
+            <strong>Final test.</strong> A new random sample of 600 paragraphs that was not used
+            during development.
           </li>
         </ul>
         <p>
-          Final model: <code>ministral-3-14b</code>, run zero-shot with 10-repeat majority voting.
-          <code>Llama-3.3-70B</code> and <code>qwen3.5-27b</code> were used only in the ensembling
-          side-experiment - and didn't make the cut.
+          The final setup runs <code>ministral-3-14b</code> zero-shot ten times and takes the
+          majority vote. Llama-3.3-70B and Qwen3.5-27B were only used in the ensemble experiment.
         </p>
 
-        <h2 id="results">The results</h2>
+        <h2 id="results">Results</h2>
         <div class="result-grid">
           <div class="result-card">
-            <div class="n">98.7%</div>
-            <div class="l">LLM accuracy vs. human consensus (n=600)</div>
+            <div class="n">0.839</div>
+            <div class="l">Cohen's κ, LLM vs. human consensus (n = 600)</div>
           </div>
           <div class="result-card">
             <div class="n">0.920</div>
-            <div class="l">Macro-F1, final validation</div>
+            <div class="l">Macro-F1 on the final sample</div>
           </div>
           <div class="result-card">
-            <div class="n">0.839</div>
-            <div class="l">Cohen's κ, LLM vs. human</div>
+            <div class="n">98.7%</div>
+            <div class="l">Raw agreement (8 disagreements in 600)</div>
           </div>
           <div class="result-card">
             <div class="n">0.616</div>
-            <div class="l">Krippendorff's α, human–human agreement</div>
+            <div class="l">Krippendorff's α between the two human coders</div>
           </div>
         </div>
         <p>
-          Only 8 disagreements out of 600 paragraphs on the final, held-out sample. Getting there
-          took real iteration - macro-F1 moved from 0.563 (zero-shot, first batch) to 0.712
-          (few-shot) to 0.574 (few-shot + chain-of-thought, a real regression) to 0.849 (zero-shot
-          again, after refining the instructions) to 0.920 (final).
+          The raw agreement looks higher than it is, because only 26 of the 600 paragraphs contain
+          a negative crime frame. A model that always answered "no frame" would already be right
+          95.7% of the time, which is why κ and macro-F1 are the numbers to look at.
         </p>
+        <p>
+          Getting there took several rounds. Macro-F1 went from 0.563 (zero-shot, first batch) to
+          0.712 (few-shot), then down to 0.574 with chain-of-thought, then up to 0.849 after we
+          rewrote the instructions, and finally 0.920 on the held-out sample.
+        </p>
+
         <div class="callout">
-          <span class="tag-label">Why the LLM number is higher than the human number</span>
+          <span class="tag-label">Comparing the LLM with the human coders</span>
           <p>
-            The LLM's κ = 0.839 is measured against the
-            <strong>resolved human-consensus label</strong>, not against any single annotator -
-            while the human α = 0.616 measures two individual coders agreeing with each other from
-            scratch, before resolution. Those are different, harder-to-compare targets: matching a
-            cleaned consensus label is an easier bar than two people independently agreeing on an
-            ambiguous case. The LLM's own prediction was also a 10-repeat majority vote, which
-            reduces its noise the same way a panel of human coders would. Reported side by side on
-            purpose, not to imply the model "beats" human judgment.
+            The LLM's κ is measured against the resolved consensus label. The human α measures two
+            coders agreeing with each other before any discussion. Matching a cleaned consensus
+            label is an easier target, and the LLM's answer is already a majority vote over ten
+            runs. So the two numbers are not directly comparable, and we do not claim the model is
+            better than the human coders.
           </p>
         </div>
 
@@ -160,42 +154,31 @@
               src="../assets/img/framing/config_comparison.png"
               alt="Horizontal bar chart comparing macro-F1 and Cohen's kappa across seven tested configurations: zero-shot, few-shot, few-shot+CoT, confidence-routed, ensemble, new250 zero-shot, and final"
             />
-            <figcaption>
-              Every configuration we tried, including the ones that didn't make the final pipeline.
-            </figcaption>
+            <figcaption>All configurations we tested, including the ones we did not keep.</figcaption>
           </figure>
           <figure>
             <img
               src="../assets/img/framing/crime_frame_by_outlet.png"
               alt="Bar chart of negative crime-frame rate by outlet category with 95% confidence intervals, showing alternative-right highest but overlapping CIs"
             />
-            <figcaption>
-              An exploratory finding - CIs overlap substantially, so we report it as descriptive
-              only.
-            </figcaption>
+            <figcaption>Negative crime-frame rate by outlet type. The confidence intervals overlap.</figcaption>
           </figure>
         </div>
 
-        <div class="callout">
-          <span class="tag-label">What didn't work</span>
-          <p>
-            Two side-experiments failed and were cut: multi-model ensembling gained only 6 F1 points
-            for 3x the inference cost, and confidence-based routing was
-            <strong>miscalibrated in the wrong direction</strong> - the model was least confident on
-            exactly the cases it got right. Both are reported in the paper as negative results, not
-            hidden.
-          </p>
-        </div>
-
-        <h2 id="standout">Why it's different</h2>
         <p>
-          Chain-of-thought prompting made things worse here (0.712 → 0.574) before instruction
-          refinement fixed it - a genuinely counterintuitive result that's easy to paper over but
-          more useful to report honestly. And the exploratory finding that alternative-right outlets
-          showed the highest negative-crime-framing rate (7.9% vs. 3.6–4.8% elsewhere) is flagged,
-          correctly, as suggestive rather than confirmed: the confidence intervals overlap
-          substantially at this sample size, and the paper says so explicitly rather than
-          overselling a 600-paragraph descriptive statistic.
+          Two side experiments did not work out. Adding two larger models as an ensemble raised
+          macro-F1 from 0.615 to 0.684 on the development set, too little for the extra compute.
+          Confidence-based routing failed because the small model's confidence scores did not
+          separate right from wrong answers, so almost every paragraph was sent to the larger
+          model. Alternative-right outlets had the highest
+          rate of negative crime frames (7.9%, against 3.6 to 4.8% elsewhere), but with 600
+          paragraphs the confidence intervals overlap, so we report this only as descriptive.
+        </p>
+
+        <h2 id="limits">Limitations</h2>
+        <p>
+          With only 26 negative crime frames in the final sample, the estimates for that class are
+          uncertain. Positive crime framing was too rare to validate at all.
         </p>
       </div>
     </div>
@@ -212,7 +195,7 @@
       </div>
       <div class="case-nav-footer">
         <a class="btn ghost" href="thesis.html">← Master's Thesis</a>
-        <a class="btn ghost" href="rag-cleaning.html">Next: RAG Data Cleaning →</a>
+        <a class="btn ghost" href="../index.html#work">Back to all work →</a>
       </div>
     </div>
 
@@ -221,7 +204,7 @@
         <div class="reveal">
           <div class="section-tag">Get in touch</div>
           <div class="footer-grid">
-            <h2>If your team has a hard<br />NLP problem, I want in.</h2>
+            <h2>Looking for my first full-time<br />role in NLP, applied AI and data science.</h2>
             <div class="footer-links">
               <a href="mailto:marmeep23@gmail.com">Email</a>
               <a href="https://www.linkedin.com/in/marmee-pandya/" target="_blank" rel="noopener"

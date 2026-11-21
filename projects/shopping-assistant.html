@@ -32,13 +32,13 @@
     <header class="case-hero wrap">
       <a class="back" href="../index.html#work">← Back to all work</a>
       <div class="case-meta">
-        <span class="meta-pill">LLM & Agents</span>
+        <span class="meta-pill">LLMs &amp; Agents</span>
       </div>
-      <h1>A multi-agent shopping copilot that reads reviews before you do</h1>
+      <h1>A multi-agent shopping assistant built with LangGraph</h1>
       <p class="hook">
-        Online shoppers drown in near-identical specs and inconsistent reviews. We built a LangGraph
-        agent pipeline that turns a plain-language query and budget into a ranked, justified top-3
-        recommendation - and it beat a keyword-search baseline by 79% on precision.
+        You type something like "quiet stand mixer under $150" and get three ranked products with
+        a short explanation for each. Against human-annotated rankings for 20 queries, it reached
+        Precision@10 of 0.565, compared with 0.315 for keyword search.
       </p>
     </header>
 
@@ -53,87 +53,72 @@
         <a href="#problem">Problem</a>
         <a href="#approach">Approach</a>
         <a href="#results">Results</a>
-        <a href="#standout">Why it's different</a>
+        <a href="#models">Model choice</a>
       </nav>
 
       <div class="case-content">
         <h2 id="problem">The problem</h2>
         <p>
-          Product pages promise clarity and deliver noise: inconsistent spec sheets, review counts
-          that don't tell you if a product is actually good, and dozens of near-duplicate listings.
-          We wanted an assistant that could take a query like
-          <em>"quiet stand mixer under $150"</em> and hand back three options with an actual
-          argument for each, not just a sorted list.
+          Comparing products online is tedious: spec sheets are inconsistent, a 4.8 rating from
+          four reviews is not the same as 4.6 from four hundred, and many listings are near
+          duplicates. We wanted a tool that takes a plain-language request and a budget and returns
+          a few options with reasons instead of a sorted list.
         </p>
 
         <h2 id="approach">The approach</h2>
         <p>
-          We built a <strong>LangGraph</strong> multi-agent pipeline with five stages:
-          <code
-            >process_query → search_products → extract_specifications → rank_products →
-            generate_recommendations</code
-          >.
+          The LangGraph pipeline has five steps:
+          <code>process_query → search_products → extract_specifications → rank_products →
+          generate_recommendations</code>.
         </p>
         <ul>
           <li>
-            <strong>Retrieval:</strong> SERPAPI pulls up to 20 live Google Shopping results per
-            query; Tavily enriches each with spec sheets and review text.
+            <strong>Search:</strong> SerpAPI returns up to 20 Google Shopping results per query,
+            and Tavily adds spec sheets and review text.
           </li>
           <li>
-            <strong>Reasoning:</strong> we benchmarked Gemini 2.0 Flash, and DeepSeek-Coder before
-            settling on <strong>LLaMA 3.1 via Ollama</strong> - it won on cost and reliability for
-            this pipeline, not raw benchmark scores.
+            <strong>Ranking:</strong> the score takes the number of reviews into account, so a
+            product with a few very positive reviews does not automatically beat one with hundreds.
           </li>
           <li>
-            <strong>Scoring:</strong> ranking is review-count-aware - a product with 4 reviews
-            doesn't get to outrank one with 400 just because its average is slightly higher.
-          </li>
-          <li>
-            <strong>Interface:</strong> a Streamlit front end with product cards, score breakdowns,
-            and CSV export, so the output is something a real person would actually use.
+            <strong>Interface:</strong> a Streamlit app with product cards, score breakdowns and CSV
+            export. A full query usually finishes within 30 seconds.
           </li>
         </ul>
 
-        <h2 id="results">The results</h2>
-        <p>Evaluated against human-annotated ground-truth rankings across 20 real queries:</p>
+        <h2 id="results">Results</h2>
+        <p>Evaluated against human-annotated rankings for 20 real queries:</p>
         <div class="result-grid">
           <div class="result-card">
             <div class="n">0.565</div>
-            <div class="l">Precision@10 (vs. 0.315 baseline)</div>
+            <div class="l">Precision@10 (keyword baseline 0.315)</div>
           </div>
           <div class="result-card">
             <div class="n">0.755</div>
-            <div class="l">MRR@10 (vs. 0.580 baseline)</div>
+            <div class="l">MRR@10 (baseline 0.580)</div>
           </div>
           <div class="result-card">
             <div class="n">0.819</div>
-            <div class="l">NDCG@10 (vs. 0.672 baseline)</div>
+            <div class="l">NDCG@10 (baseline 0.672)</div>
           </div>
           <div class="result-card">
-            <div class="n">~30s</div>
-            <div class="l">End-to-end pipeline latency</div>
+            <div class="n">~30 s</div>
+            <div class="l">Typical time for a full query</div>
           </div>
         </div>
         <p>
-          That's a 25-point precision gain over keyword search, and it runs fast enough that
-          nobody's waiting around for it.
+          Twenty queries is a small evaluation set, so these numbers show the direction of the
+          difference, not a reliable size.
         </p>
 
-        <h2 id="standout">Why it's different</h2>
+        <h2 id="models">Model choice</h2>
         <p>
-          Most course projects stop at a notebook. This one is a
-          <strong>working app</strong> - <code>app.py</code>, a Streamlit UI, a
-          <code>.env</code> config, and a recorded demo (above) - because a recommendation system
-          you can't click through isn't really a recommendation system.
+          We started with Gemini 2.0 Flash. The free tier allowed 15 requests per minute, while one
+          query needs up to 20 product analyses, and it often returned malformed JSON even with
+          strict formatting instructions, which broke the parsing steps. DeepSeek-Coder, tested as
+          a local option, handled short structured prompts but wrote shallow product summaries. We
+          ended up with Llama 3.1 running locally through Ollama.
         </p>
-        <div class="callout">
-          <span class="tag-label">Design decision</span>
-          <p>
-            We picked LLaMA 3.1 over larger closed models after direct comparison - not because it
-            scored highest on paper, but because it was the most reliable and cheapest to run at the
-            query volume we needed. Model choice is a systems decision, not a leaderboard lookup.
-          </p>
-        </div>
       </div>
     </div>
 
@@ -149,7 +134,7 @@
       </div>
       <div class="case-nav-footer">
         <a class="btn ghost" href="../index.html#work">← All case studies</a>
-        <a class="btn ghost" href="emotion-regulation.html">Next: Emotion Regulation ML →</a>
+        <a class="btn ghost" href="rag-cleaning.html">Next: RAG Data Cleaning →</a>
       </div>
     </div>
 
@@ -158,7 +143,7 @@
         <div class="reveal">
           <div class="section-tag">Get in touch</div>
           <div class="footer-grid">
-            <h2>If your team has a hard<br />NLP problem, I want in.</h2>
+            <h2>Looking for my first full-time<br />role in NLP, applied AI and data science.</h2>
             <div class="footer-links">
               <a href="mailto:marmeep23@gmail.com">Email</a>
               <a href="https://www.linkedin.com/in/marmee-pandya/" target="_blank" rel="noopener"
